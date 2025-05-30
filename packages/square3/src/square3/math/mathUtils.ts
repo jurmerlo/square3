@@ -4,7 +4,7 @@
  * JavaScript Math object.
  */
 
-import { Vec2 } from './vec2.js';
+import { Vec2 } from './vec2';
 
 /**
  * Lerp from one value to another.
