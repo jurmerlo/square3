@@ -385,7 +385,7 @@ export class ShapeRenderer extends BaseRenderer {
         sy + y,
         px,
         py,
-        'inside',
+        'outside',
         lineWidth,
         color,
         transform,
