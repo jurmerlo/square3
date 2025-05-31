@@ -1,10 +1,5 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
-import {
-  addService,
-  clearServices,
-  getService,
-  removeService,
-} from './services';
+import { addService, clearServices, getService, removeService } from './services';
 
 describe('lunas/di/service', () => {
   beforeEach(() => {
@@ -24,9 +19,7 @@ describe('lunas/di/service', () => {
   });
 
   it('should throw an error when retrieving a non-existent service', () => {
-    expect(() => getService('nonExistent')).toThrowError(
-      'Error: Service "nonExistent" does not exist.',
-    );
+    expect(() => getService('nonExistent')).toThrowError('Error: Service "nonExistent" does not exist.');
   });
 
   it('should remove a service', () => {
@@ -34,9 +27,7 @@ describe('lunas/di/service', () => {
     addService('test', testService);
 
     removeService('test');
-    expect(() => getService('test')).toThrowError(
-      'Error: Service "test" does not exist.',
-    );
+    expect(() => getService('test')).toThrowError('Error: Service "test" does not exist.');
   });
 
   it('should clear all services', () => {
@@ -48,12 +39,8 @@ describe('lunas/di/service', () => {
 
     clearServices();
 
-    expect(() => getService('service1')).toThrowError(
-      'Error: Service "service1" does not exist.',
-    );
-    expect(() => getService('service2')).toThrowError(
-      'Error: Service "service2" does not exist.',
-    );
+    expect(() => getService('service1')).toThrowError('Error: Service "service1" does not exist.');
+    expect(() => getService('service2')).toThrowError('Error: Service "service2" does not exist.');
   });
 
   it('should overwrite an existing service with the same name', () => {

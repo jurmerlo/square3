@@ -112,33 +112,14 @@ export class Vec3 {
     const vY = y ?? this.y;
     const vZ = z ?? this.z;
 
-    let w =
-      mat.value[3] * vX +
-      mat.value[7] * vY +
-      mat.value[11] * vZ +
-      mat.value[15];
+    let w = mat.value[3] * vX + mat.value[7] * vY + mat.value[11] * vZ + mat.value[15];
     if (w === 0) {
       w = 1;
     }
 
-    this.x =
-      (mat.value[0] * vX +
-        mat.value[4] * vY +
-        mat.value[8] * vZ +
-        mat.value[12]) /
-      w;
-    this.y =
-      (mat.value[1] * vX +
-        mat.value[5] * vY +
-        mat.value[9] * vZ +
-        mat.value[13]) /
-      w;
-    this.z =
-      (mat.value[2] * vX +
-        mat.value[6] * vY +
-        mat.value[10] * vZ +
-        mat.value[14]) /
-      w;
+    this.x = (mat.value[0] * vX + mat.value[4] * vY + mat.value[8] * vZ + mat.value[12]) / w;
+    this.y = (mat.value[1] * vX + mat.value[5] * vY + mat.value[9] * vZ + mat.value[13]) / w;
+    this.z = (mat.value[2] * vX + mat.value[6] * vY + mat.value[10] * vZ + mat.value[14]) / w;
   }
 
   /**

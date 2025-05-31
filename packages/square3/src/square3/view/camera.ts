@@ -137,10 +137,7 @@ export class Camera {
     y,
     zoom,
   }: CameraOptions = {}) {
-    this.position.set(
-      x ?? this.view.viewWidth * 0.5,
-      y ?? this.view.viewHeight * 0.5,
-    );
+    this.position.set(x ?? this.view.viewWidth * 0.5, y ?? this.view.viewHeight * 0.5);
     this.rotation = rotation ?? 0;
     this.zoom = zoom ?? 1;
     this.bgColor = bgColor ?? new Color(0, 0, 0);
@@ -152,24 +149,14 @@ export class Camera {
    * Updates the transformation matrix of the camera.
    */
   updateTransform(): void {
-    Mat4.fromTranslation(
-      this.screenBounds.width * 0.5,
-      this.screenBounds.height * 0.5,
-      0,
-      this.transform,
-    );
+    Mat4.fromTranslation(this.screenBounds.width * 0.5, this.screenBounds.height * 0.5, 0, this.transform);
     Mat4.fromZRotation(toRad(this.rotation), this.tempMatrix);
     Mat4.multiply(this.transform, this.tempMatrix, this.transform);
 
     Mat4.fromScale(this.zoom, this.zoom, 1, this.tempMatrix);
     Mat4.multiply(this.transform, this.tempMatrix, this.transform);
 
-    Mat4.fromTranslation(
-      -this.position.x,
-      -this.position.y,
-      0,
-      this.tempMatrix,
-    );
+    Mat4.fromTranslation(-this.position.x, -this.position.y, 0, this.tempMatrix);
     Mat4.multiply(this.transform, this.tempMatrix, this.transform);
   }
 
@@ -183,14 +170,12 @@ export class Camera {
     const tempX =
       this.position.x -
       (this.screenBounds.width * 0.5) / this.zoom +
-      (x / (this.view.canvasWidth / this.view.pixelRatio)) *
-        (this.screenBounds.width / this.zoom);
+      (x / (this.view.canvasWidth / this.view.pixelRatio)) * (this.screenBounds.width / this.zoom);
 
     const tempY =
       this.position.y -
       (this.screenBounds.height * 0.5) / this.zoom +
-      (y / (this.view.canvasHeight / this.view.pixelRatio)) *
-        (this.screenBounds.height / this.zoom);
+      (y / (this.view.canvasHeight / this.view.pixelRatio)) * (this.screenBounds.height / this.zoom);
 
     const tempPos = Vec2.get(tempX, tempY);
     const tempCenter = Vec2.get(this.position.x, this.position.y);
@@ -220,22 +205,14 @@ export class Camera {
       heightCl * this.view.viewHeight,
     );
 
-    this.target = new RenderTarget(
-      widthCl * this.view.viewWidth,
-      heightCl * this.view.viewHeight,
-    );
+    this.target = new RenderTarget(widthCl * this.view.viewWidth, heightCl * this.view.viewHeight);
   }
 
   /**
    * Resizes the camera view.
    */
   resize(): void {
-    this.updateView(
-      this.viewRect.x,
-      this.viewRect.y,
-      this.viewRect.width,
-      this.viewRect.height,
-    );
+    this.updateView(this.viewRect.x, this.viewRect.y, this.viewRect.width, this.viewRect.height);
   }
 
   /**

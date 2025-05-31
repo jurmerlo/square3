@@ -44,27 +44,12 @@ export class AtlasFrame {
       frameInfo.sourceSize.width,
       frameInfo.sourceSize.height,
     );
-    const sourceSize = new Size(
-      frameInfo.sourceSize.width,
-      frameInfo.sourceSize.height,
-    );
+    const sourceSize = new Size(frameInfo.sourceSize.width, frameInfo.sourceSize.height);
 
-    return new AtlasFrame(
-      frameInfo.filename,
-      frameRect,
-      frameInfo.trimmed,
-      sourceRect,
-      sourceSize,
-    );
+    return new AtlasFrame(frameInfo.filename, frameRect, frameInfo.trimmed, sourceRect, sourceSize);
   }
 
-  constructor(
-    name: string,
-    frame: Rectangle,
-    trimmed: boolean,
-    sourceRect: Rectangle,
-    sourceSize: Size,
-  ) {
+  constructor(name: string, frame: Rectangle, trimmed: boolean, sourceRect: Rectangle, sourceSize: Size) {
     this.name = name;
     this.frame = frame;
     this.trimmed = trimmed;

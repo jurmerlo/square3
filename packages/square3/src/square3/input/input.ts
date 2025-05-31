@@ -1,8 +1,4 @@
-import {
-  type EmitHandler,
-  Emitter,
-  type EmitterOnParams,
-} from '../emitter/emitter';
+import { type EmitHandler, Emitter, type EmitterOnParams } from '../emitter/emitter';
 import { type KeyCode, getKeyCodeFromString } from './keyCode';
 
 export type GamepadState = {
@@ -11,21 +7,9 @@ export type GamepadState = {
 };
 
 type InputEvents = {
-  keyPressed: [
-    keyCode: (typeof KeyCode)[keyof typeof KeyCode],
-    code: string,
-    key: string,
-  ];
-  keyReleased: [
-    keyCode: (typeof KeyCode)[keyof typeof KeyCode],
-    code: string,
-    key: string,
-  ];
-  keyPress: [
-    keyCode: (typeof KeyCode)[keyof typeof KeyCode],
-    code: string,
-    key: string,
-  ];
+  keyPressed: [keyCode: (typeof KeyCode)[keyof typeof KeyCode], code: string, key: string];
+  keyReleased: [keyCode: (typeof KeyCode)[keyof typeof KeyCode], code: string, key: string];
+  keyPress: [keyCode: (typeof KeyCode)[keyof typeof KeyCode], code: string, key: string];
   mousePressed: [button: number, x: number, y: number];
   mouseReleased: [button: number, x: number, y: number];
   mouseMoved: [x: number, y: number, dx: number, dy: number];
@@ -59,9 +43,7 @@ export class Input {
    * @param params - The parameters for the event listener.
    * @returns The handler for the event listener.
    */
-  on<K extends keyof InputEvents>(
-    params: EmitterOnParams<InputEvents, K>,
-  ): EmitHandler {
+  on<K extends keyof InputEvents>(params: EmitterOnParams<InputEvents, K>): EmitHandler {
     return this.emitter.on(params);
   }
 
@@ -104,10 +86,7 @@ export class Input {
 
       for (let i = 0; i < gamepad.buttons.length; i++) {
         const button = gamepad.buttons[i].value;
-        if (
-          (state.buttons[i] && state.buttons[i] !== button) ||
-          !state.buttons[i]
-        ) {
+        if ((state.buttons[i] && state.buttons[i] !== button) || !state.buttons[i]) {
           state.buttons[i] = button;
 
           this.emitter.emit('gamepadButton', gamepad.index, i, button);
@@ -161,10 +140,7 @@ export class Input {
     this.canvas.removeEventListener('touchcancel', this.onTouchCancel);
 
     window.removeEventListener('gamepadconnected', this.onGamepadConnected);
-    window.removeEventListener(
-      'gamepaddisconnected',
-      this.onGamepadDisconnected,
-    );
+    window.removeEventListener('gamepaddisconnected', this.onGamepadDisconnected);
   }
 
   private onKeyDown = (event: KeyboardEvent): void => {
@@ -249,13 +225,7 @@ export class Input {
           evY = touch.clientY;
         }
 
-        this.emitter.emit(
-          'touchPressed',
-          touch.identifier,
-          touch.clientX,
-          touch.clientY,
-          event.touches.length,
-        );
+        this.emitter.emit('touchPressed', touch.identifier, touch.clientX, touch.clientY, event.touches.length);
       }
     }
 
@@ -276,13 +246,7 @@ export class Input {
           evY = touch.clientY;
         }
 
-        this.emitter.emit(
-          'touchReleased',
-          touch.identifier,
-          touch.clientX,
-          touch.clientY,
-          event.touches.length,
-        );
+        this.emitter.emit('touchReleased', touch.identifier, touch.clientX, touch.clientY, event.touches.length);
       }
     }
 
@@ -303,13 +267,7 @@ export class Input {
           evY = touch.clientY;
         }
 
-        this.emitter.emit(
-          'touchMoved',
-          touch.identifier,
-          touch.clientX,
-          touch.clientY,
-          event.touches.length,
-        );
+        this.emitter.emit('touchMoved', touch.identifier, touch.clientX, touch.clientY, event.touches.length);
       }
     }
 
@@ -330,13 +288,7 @@ export class Input {
           evY = touch.clientY;
         }
 
-        this.emitter.emit(
-          'touchReleased',
-          touch.identifier,
-          touch.clientX,
-          touch.clientY,
-          event.touches.length,
-        );
+        this.emitter.emit('touchReleased', touch.identifier, touch.clientX, touch.clientY, event.touches.length);
       }
     }
 

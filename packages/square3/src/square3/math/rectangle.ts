@@ -49,12 +49,7 @@ export class Rectangle {
    * @returns True if the point is inside the rectangle.
    */
   hasPoint(x: number, y: number): boolean {
-    return (
-      x >= this.x &&
-      x <= this.x + this.width &&
-      y >= this.y &&
-      y <= this.y + this.height
-    );
+    return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
   }
 
   /**

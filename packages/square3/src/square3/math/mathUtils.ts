@@ -54,12 +54,7 @@ export function toRad(deg: number): number {
  * @param y2 - The y position of the second point.
  * @returns The distance.
  */
-export function distance(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-): number {
+export function distance(x1: number, y1: number, x2: number, y2: number): number {
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
 
@@ -81,12 +76,7 @@ export function fuzzyEqual(a: number, b: number, epsilon = 0.0001): boolean {
  * @param rotation - The rotation angle in degrees.
  * @returns The rotated position.
  */
-export function rotateAround(
-  point: Vec2,
-  center: Vec2,
-  rotation: number,
-  out?: Vec2,
-): Vec2 {
+export function rotateAround(point: Vec2, center: Vec2, rotation: number, out?: Vec2): Vec2 {
   const result = out ?? Vec2.get();
 
   const rad = toRad(-rotation);
@@ -110,13 +100,7 @@ export function rotateAround(
  * @param out - Optional variable to store the intersect position in.
  * @returns True if the lines intersect.
  */
-export function linesIntersect(
-  p1Start: Vec2,
-  p1End: Vec2,
-  p2Start: Vec2,
-  p2End: Vec2,
-  out?: Vec2,
-): boolean {
+export function linesIntersect(p1Start: Vec2, p1End: Vec2, p2Start: Vec2, p2End: Vec2, out?: Vec2): boolean {
   const b = p1End.clone().subtract(p1Start);
   const d = p2End.clone().subtract(p2Start);
 

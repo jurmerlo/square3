@@ -250,11 +250,7 @@ export class Scene {
     graphics.startBatch();
     for (const camera of this.cameras) {
       if (camera.active) {
-        graphics.drawRenderTarget(
-          camera.screenBounds.x,
-          camera.screenBounds.y,
-          camera.target,
-        );
+        graphics.drawRenderTarget(camera.screenBounds.x, camera.screenBounds.y, camera.target);
       }
     }
     graphics.drawBatch();

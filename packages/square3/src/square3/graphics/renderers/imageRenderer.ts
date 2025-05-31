@@ -113,11 +113,7 @@ export class ImageRenderer extends BaseRenderer {
     this.shader.applyBlendMode();
 
     const gl = this.context.gl;
-    gl.uniformMatrix4fv(
-      this.shader.projectionLocation,
-      false,
-      this.projection.value,
-    );
+    gl.uniformMatrix4fv(this.shader.projectionLocation, false, this.projection.value);
     gl.activeTexture(gl.TEXTURE0);
     if (this.currentTarget) {
       gl.bindTexture(gl.TEXTURE_2D, this.currentTarget.texture);
@@ -135,14 +131,7 @@ export class ImageRenderer extends BaseRenderer {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.indexIndices, gl.STATIC_DRAW);
 
-    gl.vertexAttribPointer(
-      this.shader.vertexPositionLocation,
-      3,
-      gl.FLOAT,
-      false,
-      this.FLOAT_SIZE * 9,
-      0,
-    );
+    gl.vertexAttribPointer(this.shader.vertexPositionLocation, 3, gl.FLOAT, false, this.FLOAT_SIZE * 9, 0);
     gl.enableVertexAttribArray(this.shader.vertexPositionLocation);
     gl.vertexAttribPointer(
       this.shader.vertexColorLocation,
@@ -153,22 +142,10 @@ export class ImageRenderer extends BaseRenderer {
       this.FLOAT_SIZE * 3,
     );
     gl.enableVertexAttribArray(this.shader.vertexColorLocation);
-    gl.vertexAttribPointer(
-      this.shader.vertexUVLocation,
-      2,
-      gl.FLOAT,
-      false,
-      this.FLOAT_SIZE * 9,
-      this.FLOAT_SIZE * 7,
-    );
+    gl.vertexAttribPointer(this.shader.vertexUVLocation, 2, gl.FLOAT, false, this.FLOAT_SIZE * 9, this.FLOAT_SIZE * 7);
     gl.enableVertexAttribArray(this.shader.vertexUVLocation);
 
-    gl.drawElements(
-      gl.TRIANGLES,
-      this.index * INDICES_PER_QUAD,
-      gl.UNSIGNED_INT,
-      0,
-    );
+    gl.drawElements(gl.TRIANGLES, this.index * INDICES_PER_QUAD, gl.UNSIGNED_INT, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
@@ -191,28 +168,8 @@ export class ImageRenderer extends BaseRenderer {
    * @param color - The color to tint the image with.
    * @param transform - The transformation matrix to apply.
    */
-  drawImage(
-    x: number,
-    y: number,
-    flipX: boolean,
-    flipY: boolean,
-    image: Image,
-    color: Color,
-    transform: Mat4,
-  ): void {
-    this.drawImageSection(
-      x,
-      y,
-      0,
-      0,
-      image.width,
-      image.height,
-      flipX,
-      flipY,
-      image,
-      color,
-      transform,
-    );
+  drawImage(x: number, y: number, flipX: boolean, flipY: boolean, image: Image, color: Color, transform: Mat4): void {
+    this.drawImageSection(x, y, 0, 0, image.width, image.height, flipX, flipY, image, color, transform);
   }
 
   /**
@@ -282,21 +239,7 @@ export class ImageRenderer extends BaseRenderer {
     color: Color,
     transform: Mat4,
   ): void {
-    this.drawScaledImageSection(
-      x,
-      y,
-      sw,
-      sh,
-      sx,
-      sy,
-      sw,
-      sh,
-      flipX,
-      flipY,
-      image,
-      color,
-      transform,
-    );
+    this.drawScaledImageSection(x, y, sw, sh, sx, sy, sw, sh, flipX, flipY, image, color, transform);
   }
 
   /**
@@ -330,73 +273,25 @@ export class ImageRenderer extends BaseRenderer {
     color: Color,
     transform: Mat4,
   ): void {
-    if (
-      this.index >= this.BUFFER_SIZE ||
-      this.currentTarget ||
-      (this.currentImage && this.currentImage !== image)
-    ) {
+    if (this.index >= this.BUFFER_SIZE || this.currentTarget || (this.currentImage && this.currentImage !== image)) {
       this.drawBatch();
     }
 
     this.currentImage = image;
     this.tempPoint.transformMat4(transform, x, y, 0);
-    this.getFlippedUV(
-      sx,
-      sy,
-      sw,
-      sh,
-      image.width,
-      image.height,
-      flipX,
-      flipY,
-      0,
-      this.tempUV,
-    );
+    this.getFlippedUV(sx, sy, sw, sh, image.width, image.height, flipX, flipY, 0, this.tempUV);
     this.updateBatch(this.tempPoint, color, this.tempUV, 0);
 
     this.tempPoint.transformMat4(transform, x + width, y, 0);
-    this.getFlippedUV(
-      sx,
-      sy,
-      sw,
-      sh,
-      image.width,
-      image.height,
-      flipX,
-      flipY,
-      1,
-      this.tempUV,
-    );
+    this.getFlippedUV(sx, sy, sw, sh, image.width, image.height, flipX, flipY, 1, this.tempUV);
     this.updateBatch(this.tempPoint, color, this.tempUV, 1);
 
     this.tempPoint.transformMat4(transform, x + width, y + height, 0);
-    this.getFlippedUV(
-      sx,
-      sy,
-      sw,
-      sh,
-      image.width,
-      image.height,
-      flipX,
-      flipY,
-      2,
-      this.tempUV,
-    );
+    this.getFlippedUV(sx, sy, sw, sh, image.width, image.height, flipX, flipY, 2, this.tempUV);
     this.updateBatch(this.tempPoint, color, this.tempUV, 2);
 
     this.tempPoint.transformMat4(transform, x, y + height, 0);
-    this.getFlippedUV(
-      sx,
-      sy,
-      sw,
-      sh,
-      image.width,
-      image.height,
-      flipX,
-      flipY,
-      3,
-      this.tempUV,
-    );
+    this.getFlippedUV(sx, sy, sw, sh, image.width, image.height, flipX, flipY, 3, this.tempUV);
     this.updateBatch(this.tempPoint, color, this.tempUV, 3);
 
     this.index++;
@@ -483,11 +378,7 @@ export class ImageRenderer extends BaseRenderer {
     color: Color,
     transform: Mat4,
   ): void {
-    if (
-      this.index >= this.BUFFER_SIZE ||
-      this.currentTarget ||
-      (this.currentImage && this.currentImage !== image)
-    ) {
+    if (this.index >= this.BUFFER_SIZE || this.currentTarget || (this.currentImage && this.currentImage !== image)) {
       this.drawBatch();
     }
 
@@ -519,18 +410,8 @@ export class ImageRenderer extends BaseRenderer {
    * @param color - The color to tint the render target with.
    * @param transform - The transformation matrix to apply.
    */
-  drawRenderTarget(
-    x: number,
-    y: number,
-    target: RenderTarget,
-    color: Color,
-    transform: Mat4,
-  ): void {
-    if (
-      this.index >= this.BUFFER_SIZE ||
-      this.currentImage ||
-      (this.currentTarget && this.currentTarget !== target)
-    ) {
+  drawRenderTarget(x: number, y: number, target: RenderTarget, color: Color, transform: Mat4): void {
+    if (this.index >= this.BUFFER_SIZE || this.currentImage || (this.currentTarget && this.currentTarget !== target)) {
       this.drawBatch();
     }
     this.currentTarget = target;
@@ -566,14 +447,7 @@ export class ImageRenderer extends BaseRenderer {
    * @param color - The color of the text.
    * @param transform - The transformation matrix to apply.
    */
-  drawBitmapText(
-    x: number,
-    y: number,
-    font: BitmapFont,
-    text: string,
-    color: Color,
-    transform: Mat4,
-  ): void {
+  drawBitmapText(x: number, y: number, font: BitmapFont, text: string, color: Color, transform: Mat4): void {
     if (!text) {
       return;
     }
@@ -606,28 +480,12 @@ export class ImageRenderer extends BaseRenderer {
       }
       xOffset += kerning;
 
-      this.tempPoint.transformMat4(
-        transform,
-        x + xOffset + charData.xOffset,
-        y + charData.yOffset,
-        0,
-      );
-      this.tempUV.set(
-        charData.x / font.image.width,
-        charData.y / font.image.height,
-      );
+      this.tempPoint.transformMat4(transform, x + xOffset + charData.xOffset, y + charData.yOffset, 0);
+      this.tempUV.set(charData.x / font.image.width, charData.y / font.image.height);
       this.updateBatch(this.tempPoint, color, this.tempUV, 0);
 
-      this.tempPoint.transformMat4(
-        transform,
-        x + xOffset + charData.xOffset + charData.width,
-        y + charData.yOffset,
-        0,
-      );
-      this.tempUV.set(
-        (charData.x + charData.width) / font.image.width,
-        charData.y / font.image.height,
-      );
+      this.tempPoint.transformMat4(transform, x + xOffset + charData.xOffset + charData.width, y + charData.yOffset, 0);
+      this.tempUV.set((charData.x + charData.width) / font.image.width, charData.y / font.image.height);
       this.updateBatch(this.tempPoint, color, this.tempUV, 1);
 
       this.tempPoint.transformMat4(
@@ -648,10 +506,7 @@ export class ImageRenderer extends BaseRenderer {
         y + charData.yOffset + charData.height,
         0,
       );
-      this.tempUV.set(
-        charData.x / font.image.width,
-        (charData.y + charData.height) / font.image.height,
-      );
+      this.tempUV.set(charData.x / font.image.width, (charData.y + charData.height) / font.image.height);
       this.updateBatch(this.tempPoint, color, this.tempUV, 3);
 
       xOffset += charData.xAdvance;
@@ -766,12 +621,7 @@ export class ImageRenderer extends BaseRenderer {
    * @param uv - The uv coordinates of the point.
    * @param pointOffset - The offset of the point in the triangle.
    */
-  private updateBatch(
-    point: Vec3,
-    color: Color,
-    uv: Vec2,
-    pointOffset: number,
-  ): void {
+  private updateBatch(point: Vec3, color: Color, uv: Vec2, pointOffset: number): void {
     const i = this.index * QUAD_OFFSET + pointOffset * OFFSET;
     this.vertexIndices[i] = point.x;
     this.vertexIndices[i + 1] = point.y;
@@ -790,10 +640,7 @@ export class ImageRenderer extends BaseRenderer {
    * Create the default shader for the image renderer.
    */
   private createDefaultShader(): void {
-    this.defaultShader = new Shader(
-      'image',
-      getImageFragmentSource(this.context.isGL1),
-    );
+    this.defaultShader = new Shader('image', getImageFragmentSource(this.context.isGL1));
     this.shader = this.defaultShader;
   }
 }

@@ -1,9 +1,4 @@
-export type BrowserType =
-  | 'Chrome'
-  | 'Firefox'
-  | 'Internet Explorer'
-  | 'Safari'
-  | 'Unknown';
+export type BrowserType = 'Chrome' | 'Firefox' | 'Internet Explorer' | 'Safari' | 'Unknown';
 
 /**
  * Get the browser that the game is running in.
@@ -35,7 +30,5 @@ export function getBrowser(): BrowserType {
  * @returns True if the game is running in a mobile browser.
  */
 export function isMobile(): boolean {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent,
-  );
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }

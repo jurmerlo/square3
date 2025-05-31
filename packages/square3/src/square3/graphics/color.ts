@@ -1,8 +1,6 @@
 import { clamp } from '../math/mathUtils';
 
-const HEX_COlOR_REGEX = new RegExp(
-  /^#([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/,
-);
+const HEX_COlOR_REGEX = new RegExp(/^#([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/);
 
 /**
  * Color represents a color with red, green, blue, and alpha components.
@@ -38,13 +36,7 @@ export class Color {
    * @param out - Optional output color.
    * @returns The new color.
    */
-  static fromBytes(
-    red: number,
-    green: number,
-    blue: number,
-    alpha = 255,
-    out?: Color,
-  ): Color {
+  static fromBytes(red: number, green: number, blue: number, alpha = 255, out?: Color): Color {
     const result = out ?? new Color();
 
     const r = clamp(red, 0, 255) / 255;
@@ -86,12 +78,7 @@ export class Color {
    * @param out - Optional output color.
    * @returns The interpolated color.
    */
-  static interpolate(
-    color1: Color,
-    color2: Color,
-    position: number,
-    out?: Color,
-  ): Color {
+  static interpolate(color1: Color, color2: Color, position: number, out?: Color): Color {
     const result = out ?? new Color();
 
     const r = (color2.red - color1.red) * position + color1.red;

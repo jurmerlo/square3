@@ -126,10 +126,7 @@ export class Vec2 {
    * @returns True if the vectors are almost equal.
    */
   fuzzyEquals(other: Vec2, epsilon = 0.0001): boolean {
-    return (
-      Math.abs(this.x - other.x) < epsilon &&
-      Math.abs(this.y - other.y) < epsilon
-    );
+    return Math.abs(this.x - other.x) < epsilon && Math.abs(this.y - other.y) < epsilon;
   }
 
   /**

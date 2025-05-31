@@ -122,9 +122,7 @@ export const KeyCode = {
   IntlBackslash: 'IntlBackslash',
 } as const;
 
-export function getKeyCodeFromString(
-  code: string,
-): (typeof KeyCode)[keyof typeof KeyCode] {
+export function getKeyCodeFromString(code: string): (typeof KeyCode)[keyof typeof KeyCode] {
   switch (code) {
     case 'Backspace':
       return KeyCode.Backspace;

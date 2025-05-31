@@ -108,9 +108,7 @@ export class Game {
 
     const pixelRatio = gameOptions.hdpi ? window.devicePixelRatio : 1;
 
-    const canvas = document.getElementById(
-      gameOptions.canvasId,
-    ) as HTMLCanvasElement;
+    const canvas = document.getElementById(gameOptions.canvasId) as HTMLCanvasElement;
 
     if (!canvas) {
       throw new Error(`Canvas with id '${gameOptions.canvasId}' not found.`);
@@ -151,9 +149,7 @@ export class Game {
     canvas.focus();
     canvas.addEventListener('blur', () => this.toBackground());
     canvas.addEventListener('focus', () => this.toForeground());
-    canvas.addEventListener('resize', () =>
-      this.resize(window.innerWidth, window.innerHeight),
-    );
+    canvas.addEventListener('resize', () => this.resize(window.innerWidth, window.innerHeight));
 
     requestAnimationFrame((_time) => {
       this.lastFrameTime = Date.now();
@@ -223,12 +219,7 @@ export class Game {
     this.graphics.transform.identity();
     this.graphics.color.set(1, 1, 1, 1);
 
-    Mat4.fromScale(
-      this.view.viewScaleX,
-      this.view.viewScaleY,
-      1,
-      this.graphics.transform,
-    );
+    Mat4.fromScale(this.view.viewScaleX, this.view.viewScaleY, 1, this.graphics.transform);
 
     this.graphics.startBatch();
     this.graphics.drawRenderTarget(0, 0, this.target);

@@ -1,11 +1,6 @@
 import type { Atlas, AtlasFrame } from './atlas';
 
-export type AnimationMode =
-  | 'normal'
-  | 'loop'
-  | 'reversed'
-  | 'loop reversed'
-  | 'ping pong';
+export type AnimationMode = 'normal' | 'loop' | 'reversed' | 'loop reversed' | 'ping pong';
 
 export class Animation {
   readonly id: string;
@@ -18,13 +13,7 @@ export class Animation {
 
   atlas: Atlas;
 
-  constructor(
-    id: string,
-    atlas: Atlas,
-    frames: string[],
-    frameDuration: number,
-    playMode: AnimationMode = 'normal',
-  ) {
+  constructor(id: string, atlas: Atlas, frames: string[], frameDuration: number, playMode: AnimationMode = 'normal') {
     this.id = id;
     this.atlas = atlas;
     this.frames = frames;
@@ -41,11 +30,7 @@ export class Animation {
   }
 
   finished(time: number): boolean {
-    if (
-      this.playMode === 'loop' ||
-      this.playMode === 'loop reversed' ||
-      this.playMode === 'ping pong'
-    ) {
+    if (this.playMode === 'loop' || this.playMode === 'loop reversed' || this.playMode === 'ping pong') {
       return false;
     }
 
@@ -70,15 +55,12 @@ export class Animation {
       case 'ping pong':
         frameNumber = frameNumber % (this.frames.length * 2 - 2);
         if (frameNumber >= this.frames.length) {
-          frameNumber =
-            this.frames.length - 2 - (frameNumber - this.frames.length);
+          frameNumber = this.frames.length - 2 - (frameNumber - this.frames.length);
         }
         break;
 
       case 'reversed':
-        frameNumber = Math.floor(
-          Math.max(this.frames.length - frameNumber - 1, 0),
-        );
+        frameNumber = Math.floor(Math.max(this.frames.length - frameNumber - 1, 0));
         break;
 
       case 'loop reversed':

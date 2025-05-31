@@ -90,25 +90,14 @@ export class ShapeRenderer extends BaseRenderer {
     this.shader.applyBlendMode();
 
     const gl = this.context.gl;
-    gl.uniformMatrix4fv(
-      this.shader.projectionLocation,
-      false,
-      this.projection.value,
-    );
+    gl.uniformMatrix4fv(this.shader.projectionLocation, false, this.projection.value);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, this.vertexIndices, gl.DYNAMIC_DRAW);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.indexIndices, gl.STATIC_DRAW);
 
-    gl.vertexAttribPointer(
-      this.shader.vertexPositionLocation,
-      3,
-      gl.FLOAT,
-      false,
-      7 * this.FLOAT_SIZE,
-      0,
-    );
+    gl.vertexAttribPointer(this.shader.vertexPositionLocation, 3, gl.FLOAT, false, 7 * this.FLOAT_SIZE, 0);
     gl.enableVertexAttribArray(this.shader.vertexPositionLocation);
 
     gl.vertexAttribPointer(
@@ -121,12 +110,7 @@ export class ShapeRenderer extends BaseRenderer {
     );
     gl.enableVertexAttribArray(this.shader.vertexColorLocation);
 
-    gl.drawElements(
-      gl.TRIANGLES,
-      this.index * VERTICES_PER_TRI,
-      gl.UNSIGNED_INT,
-      0,
-    );
+    gl.drawElements(gl.TRIANGLES, this.index * VERTICES_PER_TRI, gl.UNSIGNED_INT, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
@@ -183,25 +167,9 @@ export class ShapeRenderer extends BaseRenderer {
    * @param color - The color of the rectangle.
    * @param transform - The transformation matrix.
    */
-  drawSolidRect(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    color: Color,
-    transform: Mat4,
-  ): void {
+  drawSolidRect(x: number, y: number, width: number, height: number, color: Color, transform: Mat4): void {
     this.drawSolidTriangle(x, y, x + width, y, x, y + height, color, transform);
-    this.drawSolidTriangle(
-      x,
-      y + height,
-      x + width,
-      y,
-      x + width,
-      y + height,
-      color,
-      transform,
-    );
+    this.drawSolidTriangle(x, y + height, x + width, y, x + width, y + height, color, transform);
   }
 
   /**
@@ -226,27 +194,9 @@ export class ShapeRenderer extends BaseRenderer {
     // top
     this.drawLine(x, y, x + width, y, 'inside', lineWidth, color, transform);
     // right
-    this.drawLine(
-      x + width,
-      y,
-      x + width,
-      y + height,
-      'inside',
-      lineWidth,
-      color,
-      transform,
-    );
+    this.drawLine(x + width, y, x + width, y + height, 'inside', lineWidth, color, transform);
     // bottom
-    this.drawLine(
-      x + width,
-      y + height,
-      x,
-      y + height,
-      'inside',
-      lineWidth,
-      color,
-      transform,
-    );
+    this.drawLine(x + width, y + height, x, y + height, 'inside', lineWidth, color, transform);
     // left
     this.drawLine(x, y + height, x, y, 'inside', lineWidth, color, transform);
   }
@@ -280,72 +230,18 @@ export class ShapeRenderer extends BaseRenderer {
     const ddy = scale * dx;
     switch (align) {
       case 'inside':
-        this.drawSolidTriangle(
-          x1,
-          y1,
-          x1 + ddx * 2,
-          y1 + ddy * 2,
-          x2,
-          y2,
-          color,
-          transform,
-        );
-        this.drawSolidTriangle(
-          x2,
-          y2,
-          x1 + ddx * 2,
-          y1 + ddy * 2,
-          x2 + ddx * 2,
-          y2 + ddy * 2,
-          color,
-          transform,
-        );
+        this.drawSolidTriangle(x1, y1, x1 + ddx * 2, y1 + ddy * 2, x2, y2, color, transform);
+        this.drawSolidTriangle(x2, y2, x1 + ddx * 2, y1 + ddy * 2, x2 + ddx * 2, y2 + ddy * 2, color, transform);
         break;
 
       case 'center':
-        this.drawSolidTriangle(
-          x1 + ddx,
-          y1 + ddy,
-          x1 - ddx,
-          y1 - ddy,
-          x2 + ddx,
-          y2 + ddy,
-          color,
-          transform,
-        );
-        this.drawSolidTriangle(
-          x2 + ddx,
-          y2 + ddy,
-          x1 - ddx,
-          y1 - ddy,
-          x2 - ddx,
-          y2 - ddy,
-          color,
-          transform,
-        );
+        this.drawSolidTriangle(x1 + ddx, y1 + ddy, x1 - ddx, y1 - ddy, x2 + ddx, y2 + ddy, color, transform);
+        this.drawSolidTriangle(x2 + ddx, y2 + ddy, x1 - ddx, y1 - ddy, x2 - ddx, y2 - ddy, color, transform);
         break;
 
       case 'outside':
-        this.drawSolidTriangle(
-          x1,
-          y1,
-          x1 - ddx * 2,
-          y1 - ddy * 2,
-          x2,
-          y2,
-          color,
-          transform,
-        );
-        this.drawSolidTriangle(
-          x2,
-          y2,
-          x1 - ddx * 2,
-          y1 - ddy * 2,
-          x2 - ddx * 2,
-          y2 - ddy * 2,
-          color,
-          transform,
-        );
+        this.drawSolidTriangle(x1, y1, x1 - ddx * 2, y1 - ddy * 2, x2, y2, color, transform);
+        this.drawSolidTriangle(x2, y2, x1 - ddx * 2, y1 - ddy * 2, x2 - ddx * 2, y2 - ddy * 2, color, transform);
         break;
     }
   }
@@ -380,16 +276,7 @@ export class ShapeRenderer extends BaseRenderer {
       const t = sx;
       sx = cos * sx - sin * sy;
       sy = cos * sy + sin * t;
-      this.drawLine(
-        sx + x,
-        sy + y,
-        px,
-        py,
-        'outside',
-        lineWidth,
-        color,
-        transform,
-      );
+      this.drawLine(sx + x, sy + y, px, py, 'outside', lineWidth, color, transform);
     }
   }
 
@@ -402,14 +289,7 @@ export class ShapeRenderer extends BaseRenderer {
    * @param color - The color of the circle.
    * @param transform - The transformation matrix.
    */
-  drawSolidCircle(
-    x: number,
-    y: number,
-    radius: number,
-    segments: number,
-    color: Color,
-    transform: Mat4,
-  ): void {
+  drawSolidCircle(x: number, y: number, radius: number, segments: number, color: Color, transform: Mat4): void {
     const theta = (2 * Math.PI) / segments;
     const cos = Math.cos(theta);
     const sin = Math.sin(theta);
@@ -434,14 +314,7 @@ export class ShapeRenderer extends BaseRenderer {
    * @param color - The color of the polygon.
    * @param transform - The transformation matrix.
    */
-  drawPolygon(
-    x: number,
-    y: number,
-    vertices: Vec2[],
-    lineWidth: number,
-    color: Color,
-    transform: Mat4,
-  ): void {
+  drawPolygon(x: number, y: number, vertices: Vec2[], lineWidth: number, color: Color, transform: Mat4): void {
     if (vertices.length < 3) {
       console.log('Cannot draw polygon with less than 3 points');
       return;
@@ -453,29 +326,11 @@ export class ShapeRenderer extends BaseRenderer {
     for (let i = 1; i < vertices.length; i++) {
       const current = vertices[i];
 
-      this.drawLine(
-        last.x + x,
-        last.y + y,
-        current.x + x,
-        current.y + y,
-        'inside',
-        lineWidth,
-        color,
-        transform,
-      );
+      this.drawLine(last.x + x, last.y + y, current.x + x, current.y + y, 'inside', lineWidth, color, transform);
       last = current;
     }
 
-    this.drawLine(
-      last.x + x,
-      last.y + y,
-      start.x + x,
-      start.y + y,
-      'inside',
-      lineWidth,
-      color,
-      transform,
-    );
+    this.drawLine(last.x + x, last.y + y, start.x + x, start.y + y, 'inside', lineWidth, color, transform);
   }
 
   /**
@@ -486,13 +341,7 @@ export class ShapeRenderer extends BaseRenderer {
    * @param color - The color of the polygon.
    * @param transform - The transformation matrix.
    */
-  drawSolidPolygon(
-    x: number,
-    y: number,
-    vertices: Vec2[],
-    color: Color,
-    transform: Mat4,
-  ): void {
+  drawSolidPolygon(x: number, y: number, vertices: Vec2[], color: Color, transform: Mat4): void {
     if (vertices.length < 3) {
       console.log('Cannot draw polygon with less than 3 points');
       return;
@@ -538,10 +387,7 @@ export class ShapeRenderer extends BaseRenderer {
    * Create the default shader for the shape renderer.
    */
   private createDefaultShader(): void {
-    this.defaultShader = new Shader(
-      'shape',
-      getShapeFragmentSource(this.context.isGL1),
-    );
+    this.defaultShader = new Shader('shape', getShapeFragmentSource(this.context.isGL1));
     this.shader = this.defaultShader;
   }
 }

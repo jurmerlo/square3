@@ -114,13 +114,7 @@ export class Audio {
    * @param startTime - The position to start the sound.
    * @returns The channel id the sound is playing on.
    */
-  play(
-    sound: Sound,
-    loop = 0,
-    volume = 1,
-    channelId = -1,
-    startTime = 0,
-  ): number {
+  play(sound: Sound, loop = 0, volume = 1, channelId = -1, startTime = 0): number {
     const id = channelId !== -1 ? channelId : this.getFreeChannel();
     if (id === -1) {
       throw new Error('Unable to play sound. All audio channels are in use.');
@@ -172,9 +166,7 @@ export class Audio {
    * @param channelId - Optional channel id.
    */
   stop(channelId?: number): void {
-    const channels = channelId
-      ? [this.audioChannels[channelId]]
-      : this.audioChannels;
+    const channels = channelId ? [this.audioChannels[channelId]] : this.audioChannels;
     for (const channel of channels) {
       channel.stop();
     }
@@ -186,9 +178,7 @@ export class Audio {
    */
   pause(channelId?: number): void {
     const time = this.context.currentTime;
-    const channels = channelId
-      ? [this.audioChannels[channelId]]
-      : this.audioChannels;
+    const channels = channelId ? [this.audioChannels[channelId]] : this.audioChannels;
     for (const channel of channels) {
       channel.pause(time);
     }
@@ -202,25 +192,13 @@ export class Audio {
     if (channelId) {
       const channel = this.audioChannels[channelId];
       if (channel.paused && channel.sound) {
-        this.play(
-          channel.sound,
-          channel.loop,
-          channel.volume,
-          channelId,
-          channel.pauseTime,
-        );
+        this.play(channel.sound, channel.loop, channel.volume, channelId, channel.pauseTime);
       }
     } else {
       for (let i = 0; i < this.audioChannels.length; i++) {
         const channel = this.audioChannels[i];
         if (channel.paused && channel.sound) {
-          this.play(
-            channel.sound,
-            channel.loop,
-            channel.volume,
-            channelId,
-            channel.pauseTime,
-          );
+          this.play(channel.sound, channel.loop, channel.volume, channelId, channel.pauseTime);
         }
       }
     }
@@ -232,10 +210,7 @@ export class Audio {
    * @returns True if the sound is playing.
    */
   isPlaying(channelId: number): boolean {
-    return (
-      !this.audioChannels[channelId].ended &&
-      !this.audioChannels[channelId].paused
-    );
+    return !this.audioChannels[channelId].ended && !this.audioChannels[channelId].paused;
   }
 
   /**

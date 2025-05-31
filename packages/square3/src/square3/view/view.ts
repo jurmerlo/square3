@@ -96,13 +96,7 @@ export class View {
 
   private _scaleMode: ScaleMode;
 
-  constructor({
-    designWidth,
-    designHeight,
-    pixelRatio,
-    canvas,
-    targetFps,
-  }: ViewOptions) {
+  constructor({ designWidth, designHeight, pixelRatio, canvas, targetFps }: ViewOptions) {
     this.designSize.set(designWidth, designHeight);
     this.canvas = canvas;
     this.pixelRatio = pixelRatio;
@@ -113,14 +107,7 @@ export class View {
   }
 
   scaleToFit(): void {
-    const {
-      viewWidth,
-      viewHeight,
-      scaleFactorX,
-      scaleFactorY,
-      offsetX,
-      offsetY,
-    } = this.scaleMode({
+    const { viewWidth, viewHeight, scaleFactorX, scaleFactorY, offsetX, offsetY } = this.scaleMode({
       designWidth: this.designWidth,
       designHeight: this.designHeight,
       canvasWidth: this.canvasWidth,

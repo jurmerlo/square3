@@ -1,10 +1,4 @@
-import type {
-  BlendMode,
-  BlendOperation,
-  MipmapFilter,
-  TextureFilter,
-  TextureWrap,
-} from './types';
+import type { BlendMode, BlendOperation, MipmapFilter, TextureFilter, TextureWrap } from './types';
 
 /**
  * Tagged template literal for GLSL code for syntax highlighting.
@@ -44,10 +38,7 @@ export class GLContext {
     let context = canvas.getContext('webgl2', attributes);
 
     if (!context) {
-      context = canvas.getContext(
-        'webgl',
-        attributes,
-      ) as WebGL2RenderingContext;
+      context = canvas.getContext('webgl', attributes) as WebGL2RenderingContext;
       if (!context) {
         throw new Error('Unable to initialize WebGL context.');
       }
@@ -157,10 +148,7 @@ export class GLContext {
    * @param mipmap - The mipmap filter.
    * @returns The constant.
    */
-  getGLTextureFilter(
-    filter: TextureFilter,
-    mipmap: MipmapFilter = 'none',
-  ): number {
+  getGLTextureFilter(filter: TextureFilter, mipmap: MipmapFilter = 'none'): number {
     switch (filter) {
       case 'nearest':
         switch (mipmap) {

@@ -1,15 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  clamp,
-  distance,
-  fuzzyEqual,
-  lerp,
-  linesIntersect,
-  rotateAround,
-  toDeg,
-  toRad,
-} from './mathUtils';
+import { clamp, distance, fuzzyEqual, lerp, linesIntersect, rotateAround, toDeg, toRad } from './mathUtils';
 import { Vec2 } from './vec2';
 
 describe('mathUtils', () => {

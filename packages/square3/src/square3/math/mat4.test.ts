@@ -32,39 +32,27 @@ describe('Mat4', () => {
   });
 
   it('should set the identity matrix', () => {
-    const mat = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
+    const mat = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     mat.identity();
     expect(mat.value).toEqual([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
   });
 
   it('should compare two matrices for equality', () => {
-    const mat1 = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
-    const mat2 = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
-    const mat3 = new Mat4([
-      16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
-    ]);
+    const mat1 = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    const mat2 = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    const mat3 = new Mat4([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
     expect(mat1.equals(mat2)).toBe(true);
     expect(mat1.equals(mat3)).toBe(false);
   });
 
   it('should clone a matrix', () => {
-    const mat1 = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
+    const mat1 = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     const mat2 = mat1.clone();
     expect(mat1.equals(mat2)).toBe(true);
   });
 
   it('should copy values from another matrix', () => {
-    const mat1 = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
+    const mat1 = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     const mat2 = new Mat4();
     mat2.copyFrom(mat1);
     expect(mat1.equals(mat2)).toBe(true);
@@ -98,33 +86,21 @@ describe('Mat4', () => {
   });
 
   it('should multiply two matrices', () => {
-    const mat1 = new Mat4([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-    ]);
-    const mat2 = new Mat4([
-      16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
-    ]);
+    const mat1 = new Mat4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    const mat2 = new Mat4([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
     const result = Mat4.multiply(mat1, mat2);
-    expect(result.value).toEqual([
-      386, 444, 502, 560, 274, 316, 358, 400, 162, 188, 214, 240, 50, 60, 70,
-      80,
-    ]);
+    expect(result.value).toEqual([386, 444, 502, 560, 274, 316, 358, 400, 162, 188, 214, 240, 50, 60, 70, 80]);
   });
 
   it('should invert a matrix', () => {
     const mat = new Mat4([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 2, 3, 1]);
     const inv = mat.invert(Mat4.get());
-    expect(inv?.value).toEqual([
-      1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1, -2, -3, 1,
-    ]);
+    expect(inv?.value).toEqual([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1, -2, -3, 1]);
   });
 
   it('should set an orthographic projection matrix', () => {
     const mat = new Mat4();
     mat.ortho(0, 800, 600, 0, -1, 1);
-    expect(mat.value).toEqual([
-      0.0025, 0, 0, 0, 0, -0.0033333333333333335, 0, 0, 0, 0, -1, 0, -1, 1, -0,
-      1,
-    ]);
+    expect(mat.value).toEqual([0.0025, 0, 0, 0, 0, -0.0033333333333333335, 0, 0, 0, 0, -1, 0, -1, 1, -0, 1]);
   });
 });

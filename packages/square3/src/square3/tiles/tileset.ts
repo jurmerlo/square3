@@ -18,25 +18,15 @@ export class Tileset {
 
   private tiles: Rectangle[];
 
-  constructor({
-    image,
-    tileWidth,
-    tileHeight,
-    spacing = 0,
-    margin = 0,
-  }: TilesetOptions) {
+  constructor({ image, tileWidth, tileHeight, spacing = 0, margin = 0 }: TilesetOptions) {
     this.image = image;
     this.tileWidth = tileWidth;
     this.tileHeight = tileHeight;
 
     const width = image.width;
     const height = image.height;
-    const horizontalTiles = Math.floor(
-      (width - margin * 2 + spacing) / (tileWidth + spacing),
-    );
-    const verticalTiles = Math.floor(
-      (height - margin * 2 + spacing) / (tileHeight + spacing),
-    );
+    const horizontalTiles = Math.floor((width - margin * 2 + spacing) / (tileWidth + spacing));
+    const verticalTiles = Math.floor((height - margin * 2 + spacing) / (tileHeight + spacing));
 
     this.tiles = [];
     for (let y = 0; y < verticalTiles; y++) {

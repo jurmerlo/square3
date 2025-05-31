@@ -413,14 +413,7 @@ export class Mat4 {
    * @param near - The near clipping plane.
    * @param far - The far clipping plane.
    */
-  ortho(
-    left: number,
-    right: number,
-    bottom: number,
-    top: number,
-    near: number,
-    far: number,
-  ): void {
+  ortho(left: number, right: number, bottom: number, top: number, near: number, far: number): void {
     const lr = 1 / (left - right);
     const bt = 1 / (bottom - top);
     const nf = 1 / (near - far);
@@ -480,8 +473,7 @@ export class Mat4 {
     const b11 = a22 * a33 - a23 * a32;
 
     // Calculate the determinant
-    let det =
-      b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+    let det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
     // Can't invert if the determinant is zero.
     if (det === 0) {

@@ -74,9 +74,7 @@ export class Random {
       minSource = temp;
     }
 
-    return Math.floor(
-      minSource + (this.generate() / MODULUS) * (maxSource - minSource + 1),
-    );
+    return Math.floor(minSource + (this.generate() / MODULUS) * (maxSource - minSource + 1));
   }
 
   /**

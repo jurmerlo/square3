@@ -50,9 +50,7 @@ export class Graphics {
 
   pushTarget(target: RenderTarget): void {
     if (this.targetStack.length === MAX_TARGET_STACK) {
-      throw new Error(
-        'Render target stack size exceeded. (more pushes than pulls?)',
-      );
+      throw new Error('Render target stack size exceeded. (more pushes than pulls?)');
     }
 
     this.targetStack.push(target);
@@ -64,10 +62,7 @@ export class Graphics {
     const gl = this.context.gl;
 
     if (this.targetStack.length > 0) {
-      gl.bindFramebuffer(
-        gl.FRAMEBUFFER,
-        this.targetStack[this.targetStack.length - 1].buffer,
-      );
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.targetStack[this.targetStack.length - 1].buffer);
     } else {
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     }
@@ -82,9 +77,7 @@ export class Graphics {
 
   pushTransform(transform?: Mat4): void {
     if (this.transformStack.length === MAX_TRANSFORM_STACK) {
-      throw new Error(
-        'Transform stack size exceeded. (more pushes than pulls?)',
-      );
+      throw new Error('Transform stack size exceeded. (more pushes than pulls?)');
     }
 
     if (!transform) {
@@ -124,19 +117,9 @@ export class Graphics {
 
     if (clear) {
       if (clearColor) {
-        gl.clearColor(
-          clearColor.red,
-          clearColor.green,
-          clearColor.blue,
-          clearColor.alpha,
-        );
+        gl.clearColor(clearColor.red, clearColor.green, clearColor.blue, clearColor.alpha);
       } else {
-        gl.clearColor(
-          this.clearColor.red,
-          this.clearColor.green,
-          this.clearColor.blue,
-          this.clearColor.alpha,
-        );
+        gl.clearColor(this.clearColor.red, this.clearColor.green, this.clearColor.blue, this.clearColor.alpha);
       }
       gl.clear(gl.COLOR_BUFFER_BIT);
     }
@@ -152,150 +135,49 @@ export class Graphics {
     this.imageRenderer.setShader(shader);
   }
 
-  drawSolidTriangle(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    x3: number,
-    y3: number,
-  ): void {
+  drawSolidTriangle(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawSolidTriangle(
-      x1,
-      y1,
-      x2,
-      y2,
-      x3,
-      y3,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawSolidTriangle(x1, y1, x2, y2, x3, y3, this.color, this.transform);
   }
 
   drawSolidRect(x: number, y: number, width: number, height: number): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawSolidRect(
-      x,
-      y,
-      width,
-      height,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawSolidRect(x, y, width, height, this.color, this.transform);
   }
 
-  drawRect(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    lineWidth = 1,
-  ): void {
+  drawRect(x: number, y: number, width: number, height: number, lineWidth = 1): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawRect(
-      x,
-      y,
-      width,
-      height,
-      lineWidth,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawRect(x, y, width, height, lineWidth, this.color, this.transform);
   }
 
-  drawLine(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    align: LineAlign,
-    lineWidth = 1,
-  ): void {
+  drawLine(x1: number, y1: number, x2: number, y2: number, align: LineAlign, lineWidth = 1): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawLine(
-      x1,
-      y1,
-      x2,
-      y2,
-      align,
-      lineWidth,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawLine(x1, y1, x2, y2, align, lineWidth, this.color, this.transform);
   }
 
   drawSolidCircle(x: number, y: number, radius: number, segments = 32): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawSolidCircle(
-      x,
-      y,
-      radius,
-      segments,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawSolidCircle(x, y, radius, segments, this.color, this.transform);
   }
 
-  drawCircle(
-    x: number,
-    y: number,
-    radius: number,
-    segments = 32,
-    lineWidth = 1,
-  ): void {
+  drawCircle(x: number, y: number, radius: number, segments = 32, lineWidth = 1): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawCircle(
-      x,
-      y,
-      radius,
-      segments,
-      lineWidth,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawCircle(x, y, radius, segments, lineWidth, this.color, this.transform);
   }
 
   drawSolidPolygon(x: number, y: number, vertices: Vec2[]): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawSolidPolygon(
-      x,
-      y,
-      vertices,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawSolidPolygon(x, y, vertices, this.color, this.transform);
   }
 
   drawPolygon(x: number, y: number, vertices: Vec2[], lineWidth = 1): void {
     this.imageRenderer.drawBatch();
-    this.shapeRenderer.drawPolygon(
-      x,
-      y,
-      vertices,
-      lineWidth,
-      this.color,
-      this.transform,
-    );
+    this.shapeRenderer.drawPolygon(x, y, vertices, lineWidth, this.color, this.transform);
   }
 
-  drawImage(
-    x: number,
-    y: number,
-    image: Image,
-    flipX = false,
-    flipY = false,
-  ): void {
+  drawImage(x: number, y: number, image: Image, flipX = false, flipY = false): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawImage(
-      x,
-      y,
-      flipX,
-      flipY,
-      image,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawImage(x, y, flipX, flipY, image, this.color, this.transform);
   }
 
   drawScaledImage(
@@ -308,17 +190,7 @@ export class Graphics {
     flipY = false,
   ): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawScaledImage(
-      x,
-      y,
-      width,
-      height,
-      flipX,
-      flipY,
-      image,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawScaledImage(x, y, width, height, flipX, flipY, image, this.color, this.transform);
   }
 
   drawImageSection(
@@ -333,19 +205,7 @@ export class Graphics {
     flipY = false,
   ): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawImageSection(
-      x,
-      y,
-      sx,
-      sy,
-      sw,
-      sh,
-      flipX,
-      flipY,
-      image,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawImageSection(x, y, sx, sy, sw, sh, flipX, flipY, image, this.color, this.transform);
   }
 
   drawScaledImageSection(
@@ -391,19 +251,7 @@ export class Graphics {
     image: Image,
   ): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawImagePoints(
-      tlX,
-      tlY,
-      trX,
-      trY,
-      brX,
-      brY,
-      blX,
-      blY,
-      image,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawImagePoints(tlX, tlY, trX, trY, brX, brY, blX, blY, image, this.color, this.transform);
   }
 
   drawImageSectionPoints(
@@ -443,25 +291,12 @@ export class Graphics {
 
   drawRenderTarget(x: number, y: number, target: RenderTarget): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawRenderTarget(
-      x,
-      y,
-      target,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawRenderTarget(x, y, target, this.color, this.transform);
   }
 
   drawBitmapText(x: number, y: number, font: BitmapFont, text: string): void {
     this.shapeRenderer.drawBatch();
-    this.imageRenderer.drawBitmapText(
-      x,
-      y,
-      font,
-      text,
-      this.color,
-      this.transform,
-    );
+    this.imageRenderer.drawBitmapText(x, y, font, text, this.color, this.transform);
   }
 
   setBool(location: WebGLUniformLocation | null, value: boolean): void {
@@ -472,30 +307,15 @@ export class Graphics {
     this.context.gl.uniform1i(location, value);
   }
 
-  setInt2(
-    location: WebGLUniformLocation | null,
-    value1: number,
-    value2: number,
-  ): void {
+  setInt2(location: WebGLUniformLocation | null, value1: number, value2: number): void {
     this.context.gl.uniform2i(location, value1, value2);
   }
 
-  setInt3(
-    location: WebGLUniformLocation | null,
-    value1: number,
-    value2: number,
-    value3: number,
-  ): void {
+  setInt3(location: WebGLUniformLocation | null, value1: number, value2: number, value3: number): void {
     this.context.gl.uniform3i(location, value1, value2, value3);
   }
 
-  setInt4(
-    location: WebGLUniformLocation | null,
-    value1: number,
-    value2: number,
-    value3: number,
-    value4: number,
-  ): void {
+  setInt4(location: WebGLUniformLocation | null, value1: number, value2: number, value3: number, value4: number): void {
     this.context.gl.uniform4i(location, value1, value2, value3, value4);
   }
 
@@ -507,20 +327,11 @@ export class Graphics {
     this.context.gl.uniform1f(location, value);
   }
 
-  setFloat2(
-    location: WebGLUniformLocation | null,
-    value1: number,
-    value2: number,
-  ): void {
+  setFloat2(location: WebGLUniformLocation | null, value1: number, value2: number): void {
     this.context.gl.uniform2f(location, value1, value2);
   }
 
-  setFloat3(
-    location: WebGLUniformLocation | null,
-    value1: number,
-    value2: number,
-    value3: number,
-  ): void {
+  setFloat3(location: WebGLUniformLocation | null, value1: number, value2: number, value3: number): void {
     this.context.gl.uniform3f(location, value1, value2, value3);
   }
 

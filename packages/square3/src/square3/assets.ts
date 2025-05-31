@@ -58,12 +58,7 @@ export abstract class AssetLoader<T> {
    * @param props Any other properties needed to load the asset.
    * @param keep Should this asset be stored.
    */
-  abstract load(
-    id: string,
-    path: string,
-    props?: unknown,
-    keep?: boolean,
-  ): Promise<T>;
+  abstract load(id: string, path: string, props?: unknown, keep?: boolean): Promise<T>;
 
   /**
    * Add an externally loaded asset to the loader.
@@ -247,12 +242,7 @@ class ImageLoader extends AssetLoader<Image> {
     super(Image, assets);
   }
 
-  async load(
-    id: string,
-    path: string,
-    _props?: unknown,
-    keep = true,
-  ): Promise<Image> {
+  async load(id: string, path: string, _props?: unknown, keep = true): Promise<Image> {
     return new Promise((resolve, reject) => {
       const element = document.createElement('img');
       element.onload = (): void => {
@@ -265,12 +255,7 @@ class ImageLoader extends AssetLoader<Image> {
         const canvasContext = canvas.getContext('2d');
         canvasContext?.drawImage(element, 0, 0);
 
-        const data = canvasContext?.getImageData(
-          0,
-          0,
-          element.width,
-          element.height,
-        ).data;
+        const data = canvasContext?.getImageData(0, 0, element.width, element.height).data;
         if (data) {
           const image = new Image(element.width, element.height, data);
           if (keep) {
@@ -333,26 +318,9 @@ class BitmapFontLoader extends AssetLoader<BitmapFont> {
     super(BitmapFont, assets);
   }
 
-  async load(
-    id: string,
-    path: string,
-    _props?: unknown,
-    keep = true,
-  ): Promise<BitmapFont> {
-    const image = await this.assets.load(
-      Image,
-      `jume_bitmap_font_${id}`,
-      `${path}.png`,
-      undefined,
-      keep,
-    );
-    const data = await this.assets.load(
-      String,
-      `jume_bitmap_font_${id}`,
-      `${path}.fnt`,
-      undefined,
-      keep,
-    );
+  async load(id: string, path: string, _props?: unknown, keep = true): Promise<BitmapFont> {
+    const image = await this.assets.load(Image, `jume_bitmap_font_${id}`, `${path}.png`, undefined, keep);
+    const data = await this.assets.load(String, `jume_bitmap_font_${id}`, `${path}.fnt`, undefined, keep);
 
     const font = new BitmapFont(image, data.valueOf());
     if (keep) {
@@ -380,12 +348,7 @@ class SoundLoader extends AssetLoader<Sound> {
     super(Sound, assets);
   }
 
-  async load(
-    id: string,
-    path: string,
-    _props?: unknown,
-    keep?: boolean,
-  ): Promise<Sound> {
+  async load(id: string, path: string, _props?: unknown, keep?: boolean): Promise<Sound> {
     const response = await fetch(path);
     if (response.status < 400) {
       const buffer = await response.arrayBuffer();
@@ -409,26 +372,9 @@ class AtlasLoader extends AssetLoader<Atlas> {
     super(Atlas, assets);
   }
 
-  async load(
-    id: string,
-    path: string,
-    _props?: unknown,
-    keep?: boolean,
-  ): Promise<Atlas> {
-    const image = await this.assets.load(
-      Image,
-      `jume_atlas_${id}`,
-      `${path}.png`,
-      undefined,
-      keep,
-    );
-    const data = await this.assets.load(
-      String,
-      `jume_atlas_${id}`,
-      `${path}.json`,
-      undefined,
-      keep,
-    );
+  async load(id: string, path: string, _props?: unknown, keep?: boolean): Promise<Atlas> {
+    const image = await this.assets.load(Image, `jume_atlas_${id}`, `${path}.png`, undefined, keep);
+    const data = await this.assets.load(String, `jume_atlas_${id}`, `${path}.json`, undefined, keep);
 
     const atlas = new Atlas(image, data.valueOf());
     if (keep) {
@@ -462,31 +408,14 @@ class TilesetLoader extends AssetLoader<Tileset> {
     super(Tileset, assets);
   }
 
-  async load(
-    id: string,
-    path: string,
-    props?: TilesetLoaderProps,
-    keep?: boolean,
-  ): Promise<Tileset> {
-    if (
-      !props ||
-      !props.tileWidth ||
-      !props.tileHeight ||
-      !props.spacing ||
-      !props.margin
-    ) {
+  async load(id: string, path: string, props?: TilesetLoaderProps, keep?: boolean): Promise<Tileset> {
+    if (!props || !props.tileWidth || !props.tileHeight || !props.spacing || !props.margin) {
       throw new Error('missing properties to load the tilemap');
     }
 
     const { tileWidth, tileHeight, spacing, margin } = props;
 
-    const image = await this.assets.load(
-      Image,
-      `jume_tileset_${id}`,
-      path,
-      undefined,
-      keep,
-    );
+    const image = await this.assets.load(Image, `jume_tileset_${id}`, path, undefined, keep);
     const tileset = new Tileset({
       image,
       tileWidth,

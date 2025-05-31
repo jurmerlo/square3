@@ -2,6 +2,11 @@
   "name": "@square3/square3",
   "version": "0.1.0",
   "type": "module",
+  "exports": {
+    "types": "./dist/square3.d.ts",
+    "import": "./dist/square3.js"
+  },
+  "files": ["./dist/square3.d.ts", "./dist/square3.js"],
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json && vite build",
@@ -10,7 +15,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@types/node": "^22.15.28",
+    "@types/node": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "^4.5.4",

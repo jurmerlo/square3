@@ -1,8 +1,5 @@
 import { inject } from '../di/inject.js';
-import {
-  getImageVertexSource,
-  getShapeVertexSource,
-} from './defaultShaders.js';
+import { getImageVertexSource, getShapeVertexSource } from './defaultShaders.js';
 import type { GLContext } from './glContext.js';
 import type { BlendParameters, TextureParameters } from './types.js';
 
@@ -90,14 +87,10 @@ export class Shader {
     this.type = type;
     const gl = this.context.gl;
 
-    this.anisotropicFilter = this.context.gl.getExtension(
-      'EXT_texture_filter_anisotropic',
-    );
+    this.anisotropicFilter = this.context.gl.getExtension('EXT_texture_filter_anisotropic');
 
     const vertexSource =
-      type === 'shape'
-        ? getShapeVertexSource(this.context.isGL1)
-        : getImageVertexSource(this.context.isGL1);
+      type === 'shape' ? getShapeVertexSource(this.context.isGL1) : getImageVertexSource(this.context.isGL1);
 
     this.vertexShader = this.createShader(gl.VERTEX_SHADER, vertexSource);
     this.fragmentShader = this.createShader(gl.FRAGMENT_SHADER, source);
@@ -150,9 +143,7 @@ export class Shader {
    * @returns The uniform location or null if it does not exist.
    */
   getUniformLocation(id: string): WebGLUniformLocation | null {
-    return this.program
-      ? this.context.gl.getUniformLocation(this.program, id)
-      : null;
+    return this.program ? this.context.gl.getUniformLocation(this.program, id) : null;
   }
 
   /**
@@ -164,42 +155,21 @@ export class Shader {
     gl.activeTexture(gl.TEXTURE0 + textUnit);
 
     const tex2d = gl.TEXTURE_2D;
-    gl.texParameteri(
-      tex2d,
-      gl.TEXTURE_WRAP_S,
-      this.context.getGLTextureWrap(this.textureParameters.uWrap),
-    );
-    gl.texParameteri(
-      tex2d,
-      gl.TEXTURE_WRAP_T,
-      this.context.getGLTextureWrap(this.textureParameters.vWrap),
-    );
+    gl.texParameteri(tex2d, gl.TEXTURE_WRAP_S, this.context.getGLTextureWrap(this.textureParameters.uWrap));
+    gl.texParameteri(tex2d, gl.TEXTURE_WRAP_T, this.context.getGLTextureWrap(this.textureParameters.vWrap));
     gl.texParameteri(
       tex2d,
       gl.TEXTURE_MIN_FILTER,
-      this.context.getGLTextureFilter(
-        this.textureParameters.minFilter,
-        this.textureParameters.mipmap,
-      ),
+      this.context.getGLTextureFilter(this.textureParameters.minFilter, this.textureParameters.mipmap),
     );
     gl.texParameteri(
       tex2d,
       gl.TEXTURE_MAG_FILTER,
-      this.context.getGLTextureFilter(
-        this.textureParameters.magFilter,
-        this.textureParameters.mipmap,
-      ),
+      this.context.getGLTextureFilter(this.textureParameters.magFilter, this.textureParameters.mipmap),
     );
 
-    if (
-      this.textureParameters.minFilter === 'anisotropic' &&
-      this.anisotropicFilter
-    ) {
-      gl.texParameteri(
-        tex2d,
-        this.anisotropicFilter.TEXTURE_MAX_ANISOTROPY_EXT,
-        4,
-      );
+    if (this.textureParameters.minFilter === 'anisotropic' && this.anisotropicFilter) {
+      gl.texParameteri(tex2d, this.anisotropicFilter.TEXTURE_MAX_ANISOTROPY_EXT, 4);
     }
   }
 
@@ -208,10 +178,7 @@ export class Shader {
    */
   applyBlendMode(): void {
     const gl = this.context.gl;
-    if (
-      this.blendParameters.source === 'blend one' &&
-      this.blendParameters.destination === 'blend zero'
-    ) {
+    if (this.blendParameters.source === 'blend one' && this.blendParameters.destination === 'blend zero') {
       gl.disable(gl.BLEND);
     } else {
       gl.enable(gl.BLEND);
@@ -253,9 +220,7 @@ export class Shader {
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      throw new Error(
-        `Error compiling shader:\n${gl.getShaderInfoLog(shader)}`,
-      );
+      throw new Error(`Error compiling shader:\n${gl.getShaderInfoLog(shader)}`);
     }
 
     return shader;
@@ -273,20 +238,13 @@ export class Shader {
       gl.attachShader(program, this.fragmentShader);
       gl.linkProgram(program);
 
-      const success = gl.getProgramParameter(
-        program,
-        gl.LINK_STATUS,
-      ) as boolean;
+      const success = gl.getProgramParameter(program, gl.LINK_STATUS) as boolean;
       if (!success) {
         const error = gl.getProgramInfoLog(program);
         throw new Error(`Error while linking shader program: ${error}`);
       }
 
-      gl.bindAttribLocation(
-        program,
-        this.vertexPositionLocation,
-        'a_vertexPosition',
-      );
+      gl.bindAttribLocation(program, this.vertexPositionLocation, 'a_vertexPosition');
       gl.bindAttribLocation(program, this.vertexColorLocation, 'a_vertexColor');
 
       if (this.type === 'image') {
