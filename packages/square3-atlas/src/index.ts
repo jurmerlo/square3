@@ -118,7 +118,7 @@ function createConfig(): void {
   const fullPath = Path.join(process.cwd(), file);
 
   const config = `
-[[atlas]]
+[[atlases]]
 name = "sprites"
 saveFolder = "assets"
 folders = [
@@ -141,7 +141,7 @@ const program = new Command();
 program
   .name('Square 3 Atlas Packager')
   .description('Packs images into atlases based on a TOML configuration file.')
-  .version('1.0.0');
+  .version('0.1.0');
 
 program
   .command('pack')

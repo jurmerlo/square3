@@ -1,13 +1,14 @@
+import { Assets } from './assets';
 import { addService } from './di/services';
-import { GLContext } from './graphics/glContext.js';
-import { Graphics } from './graphics/graphics.js';
-import { RenderTarget } from './graphics/renderTarget.js';
-import { Input } from './input/input.js';
-import { Mat4 } from './math/mat4.js';
-import { clamp } from './math/mathUtils.js';
-import { type SceneType, Scenes } from './scenes.js';
-import { Time } from './utils/time.js';
-import { View } from './view/view.js';
+import { GLContext } from './graphics/glContext';
+import { Graphics } from './graphics/graphics';
+import { RenderTarget } from './graphics/renderTarget';
+import { Input } from './input/input';
+import { Mat4 } from './math/mat4';
+import { clamp } from './math/mathUtils';
+import { type SceneType, Scenes } from './scenes';
+import { Time } from './utils/time';
+import { View } from './view/view';
 
 /**
  * This is the maximum value the delta time can be. To prevent big spikes.
@@ -44,7 +45,7 @@ export type GameOptions = {
   canvasHeight?: number;
 
   /**
-   * The id attribute of the html canvas element to run the game in. Defaults to 'lunas'.
+   * The id attribute of the html canvas element to run the game in. Defaults to 'square3Canvas'.
    */
   canvasId?: string;
 
@@ -145,6 +146,10 @@ export class Game {
     this.target = new RenderTarget(this.view.viewWidth, this.view.viewHeight);
     this.scenes = new Scenes();
     addService('scenes', this.scenes);
+
+    const assets = new Assets();
+    assets.registerBuiltinLoaders();
+    addService('assets', assets);
 
     canvas.focus();
     canvas.addEventListener('blur', () => this.toBackground());

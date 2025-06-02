@@ -1,5 +1,4 @@
 import { Rectangle } from '../math/rectangle';
-import { Size } from '../math/size';
 import type { Image } from './image';
 
 type FrameSize = {
@@ -29,8 +28,6 @@ export class AtlasFrame {
 
   readonly sourceRect: Rectangle;
 
-  readonly sourceSize: Size;
-
   static fromJsonFrame(frameInfo: AtlasFrameInfo): AtlasFrame {
     const frameRect = new Rectangle(
       frameInfo.frame.x,
@@ -44,17 +41,15 @@ export class AtlasFrame {
       frameInfo.sourceSize.width,
       frameInfo.sourceSize.height,
     );
-    const sourceSize = new Size(frameInfo.sourceSize.width, frameInfo.sourceSize.height);
 
-    return new AtlasFrame(frameInfo.filename, frameRect, frameInfo.trimmed, sourceRect, sourceSize);
+    return new AtlasFrame(frameInfo.filename, frameRect, frameInfo.trimmed, sourceRect);
   }
 
-  constructor(name: string, frame: Rectangle, trimmed: boolean, sourceRect: Rectangle, sourceSize: Size) {
+  constructor(name: string, frame: Rectangle, trimmed: boolean, sourceRect: Rectangle) {
     this.name = name;
     this.frame = frame;
     this.trimmed = trimmed;
     this.sourceRect = sourceRect;
-    this.sourceSize = sourceSize;
   }
 }
 

@@ -12,9 +12,11 @@
     "build": "tsc -p tsconfig.build.json && vite build",
     "preview": "vite preview",
     "lint": "biome check",
-    "test": "vitest run"
+    "test": "vitest run",
+    "atlas": "square3-atlas pack"
   },
   "devDependencies": {
+    "@square3/atlas": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

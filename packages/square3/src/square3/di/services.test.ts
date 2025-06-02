@@ -1,7 +1,7 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import { addService, clearServices, getService, removeService } from './services';
 
-describe('lunas/di/service', () => {
+describe('square3/di/service', () => {
   beforeEach(() => {
     clearServices();
   });

@@ -1,7 +1,7 @@
-import { inject } from '../di/inject.js';
-import { getImageVertexSource, getShapeVertexSource } from './defaultShaders.js';
-import type { GLContext } from './glContext.js';
-import type { BlendParameters, TextureParameters } from './types.js';
+import { inject } from '../di/inject';
+import { getImageVertexSource, getShapeVertexSource } from './defaultShaders';
+import type { GLContext } from './glContext';
+import type { BlendParameters, TextureParameters } from './types';
 
 /**
  * Is the shader for shapes or images.

@@ -4,6 +4,15 @@ export * from './audio/audio';
 export * from './audio/audioChannel';
 export * from './audio/sound';
 
+export * from './components/cAnimation';
+export * from './components/cBoxShape';
+export * from './components/cCircleShape';
+export * from './components/cPolyShape';
+export * from './components/cSprite';
+export * from './components/cText';
+export * from './components/cTilemap';
+export * from './components/cTransform';
+
 export * from './di/inject';
 export * from './di/services';
 
@@ -33,10 +42,14 @@ export * from './math/rectangle';
 export * from './math/size';
 export * from './math/vec2';
 export * from './math/vec3';
+export * from './math/xy';
 
 export * from './scenes';
 
 export * from './tiles/tileset';
+
+export * from './tween/easing';
+export * from './tween/tween';
 
 export * from './utils/bitset';
 export * from './utils/browserInfo';

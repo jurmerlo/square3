@@ -1,6 +1,26 @@
-import { Game, type Graphics, Scene } from '../square3';
+import { type Assets, Atlas, Game, type Graphics, Scene, type Scenes, inject } from '../square3';
 
-class GameScenes extends Scene {
+class LoadScene extends Scene {
+  @inject()
+  private assets!: Assets;
+
+  @inject()
+  private scenes!: Scenes;
+
+  constructor() {
+    super();
+    this.loadAssets();
+  }
+
+  async loadAssets(): Promise<void> {
+    const atlas = await this.assets.load(Atlas, 'sprites', 'assets/sprites');
+    console.log('Atlas loaded:', atlas);
+
+    this.scenes.switch(GameScene, 'replace');
+  }
+}
+
+class GameScene extends Scene {
   override draw(graphics: Graphics): void {
     graphics.startBatch(true);
     graphics.color.set(1, 1, 0, 1);
@@ -10,4 +30,4 @@ class GameScenes extends Scene {
   }
 }
 
-new Game({ startScene: GameScenes });
+new Game({ startScene: LoadScene });

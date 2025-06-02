@@ -319,8 +319,8 @@ class BitmapFontLoader extends AssetLoader<BitmapFont> {
   }
 
   async load(id: string, path: string, _props?: unknown, keep = true): Promise<BitmapFont> {
-    const image = await this.assets.load(Image, `jume_bitmap_font_${id}`, `${path}.png`, undefined, keep);
-    const data = await this.assets.load(String, `jume_bitmap_font_${id}`, `${path}.fnt`, undefined, keep);
+    const image = await this.assets.load(Image, `square3_bitmap_font_${id}`, `${path}.png`, undefined, keep);
+    const data = await this.assets.load(String, `square3_bitmap_font_${id}`, `${path}.fnt`, undefined, keep);
 
     const font = new BitmapFont(image, data.valueOf());
     if (keep) {
@@ -332,8 +332,8 @@ class BitmapFontLoader extends AssetLoader<BitmapFont> {
 
   override unload(id: string): boolean {
     if (this.loadedAssets[id]) {
-      this.assets.unload(Image, `jume_bitmap_fot_${id}`);
-      this.assets.unload(String, `jume_bitmap_font_${id}`);
+      this.assets.unload(Image, `square3_bitmap_fot_${id}`);
+      this.assets.unload(String, `square3_bitmap_font_${id}`);
     }
 
     return super.unload(id);
@@ -373,8 +373,8 @@ class AtlasLoader extends AssetLoader<Atlas> {
   }
 
   async load(id: string, path: string, _props?: unknown, keep?: boolean): Promise<Atlas> {
-    const image = await this.assets.load(Image, `jume_atlas_${id}`, `${path}.png`, undefined, keep);
-    const data = await this.assets.load(String, `jume_atlas_${id}`, `${path}.json`, undefined, keep);
+    const image = await this.assets.load(Image, `square3_atlas_${id}`, `${path}.png`, undefined, keep);
+    const data = await this.assets.load(String, `square3_atlas_${id}`, `${path}.json`, undefined, keep);
 
     const atlas = new Atlas(image, data.valueOf());
     if (keep) {
@@ -386,8 +386,8 @@ class AtlasLoader extends AssetLoader<Atlas> {
 
   override unload(id: string): boolean {
     if (this.loadedAssets[id]) {
-      this.assets.unload(Image, `jume_atlas_${id}`);
-      this.assets.unload(String, `jume_atlas_${id}`);
+      this.assets.unload(Image, `square3_atlas_${id}`);
+      this.assets.unload(String, `square3_atlas_${id}`);
 
       return super.unload(id);
     }
@@ -415,7 +415,7 @@ class TilesetLoader extends AssetLoader<Tileset> {
 
     const { tileWidth, tileHeight, spacing, margin } = props;
 
-    const image = await this.assets.load(Image, `jume_tileset_${id}`, path, undefined, keep);
+    const image = await this.assets.load(Image, `square3_tileset_${id}`, path, undefined, keep);
     const tileset = new Tileset({
       image,
       tileWidth,
@@ -432,7 +432,7 @@ class TilesetLoader extends AssetLoader<Tileset> {
 
   override unload(id: string): boolean {
     if (this.loadedAssets[id]) {
-      this.assets.unload(Image, `jume_tileset_${id}`);
+      this.assets.unload(Image, `square3_tileset_${id}`);
 
       return super.unload(id);
     }

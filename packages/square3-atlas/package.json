@@ -1,5 +1,5 @@
 {
-  "name": "square3-atlas",
+  "name": "@square3/atlas",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",

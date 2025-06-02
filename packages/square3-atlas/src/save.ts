@@ -72,7 +72,8 @@ export function saveJsonData(name: string, saveFolder: string, atlas: Atlas): vo
   }
 
   const path = Path.join(saveFolder, `${name}.json`);
-  const content = JSON.stringify({ frames: frames }, null, 2);
+  let content = JSON.stringify({ frames: frames }, null, 2);
+  content += '\n';
 
   try {
     writeFileSync(path, content);

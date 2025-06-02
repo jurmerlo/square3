@@ -29,6 +29,9 @@ importers:
 
   packages/square3:
     devDependencies:
+      '@square3/atlas':
+        specifier: workspace:*
+        version: link:../square3-atlas
       '@types/node':
         specifier: 'catalog:'
         version: 22.15.28

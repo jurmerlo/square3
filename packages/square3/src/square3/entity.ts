@@ -1,4 +1,4 @@
-import type { Graphics } from './graphics/graphics.js';
+import type { Graphics } from './graphics/graphics';
 
 const HIGHEST_VALUE = 4294967296;
 

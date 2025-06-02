@@ -26,6 +26,9 @@
       },
       "nursery": {
         "useExplicitType": "error"
+      },
+      "suspicious": {
+        "useAwait": "error"
       }
     }
   },
