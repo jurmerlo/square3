@@ -283,12 +283,11 @@ export function easeOutElastic(time: number, begin: number, change: number, dura
     return begin;
   }
 
-  let easeTime = time / duration;
+  const easeTime = time / duration;
   if (easeTime === 1) {
     return begin + change;
   }
 
-  easeTime -= 1;
   return a * 2 ** (-10 * easeTime) * Math.sin(((easeTime * duration - s) * PI_M2) / p) + change + begin;
 }
 
@@ -345,8 +344,8 @@ export function easeInCircular(time: number, begin: number, change: number, dura
  * @return The updated property value.
  */
 export function easeOutCircular(time: number, begin: number, change: number, duration: number): number {
-  const easeTime = time / duration;
-  return change * Math.sqrt(1 - (easeTime - 1) * easeTime) + begin;
+  const easeTime = time / duration - 1;
+  return change * Math.sqrt(1 - easeTime * easeTime) + begin;
 }
 
 /**
@@ -440,18 +439,20 @@ export function easeInBounce(time: number, begin: number, change: number, durati
 export function easeOutBounce(time: number, begin: number, change: number, duration: number): number {
   let easeTime = time / duration;
   if (easeTime < 1 / 2.75) {
-    return change * (7.5625 * time * time) + begin;
+    return change * (7.5625 * easeTime * easeTime) + begin;
   }
 
-  easeTime -= 2.625 / 2.75;
   if (easeTime < 2 / 2.75) {
+    easeTime -= 1.5 / 2.75;
     return change * (7.5625 * easeTime * easeTime + 0.75) + begin;
   }
 
   if (easeTime < 2.5 / 2.75) {
+    easeTime -= 2.25 / 2.75;
     return change * (7.5625 * easeTime * easeTime + 0.9375) + begin;
   }
 
+  easeTime -= 2.625 / 2.75;
   return change * (7.5625 * easeTime * easeTime + 0.984375) + begin;
 }
 

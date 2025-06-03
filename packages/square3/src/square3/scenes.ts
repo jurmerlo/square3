@@ -28,7 +28,7 @@ export class Scenes {
   /**
    * The scene stack. The last scene in the array is the current scene.
    */
-  private sceneStack: Scene[];
+  sceneStack: Scene[];
 
   private sceneTypeToSwitch?: {
     type: SceneSwitchType | 'pop';
@@ -133,6 +133,8 @@ export class Scenes {
         if (this.sceneStack.length > 0) {
           this.current?.resume();
         }
+
+        this.sceneTypeToSwitch = undefined;
       } else if (sceneType) {
         const newScene = new sceneType();
 
@@ -155,14 +157,30 @@ export class Scenes {
 
             this.sceneStack.push(newScene);
         }
-      }
 
-      this.sceneTypeToSwitch = undefined;
+        this.sceneTypeToSwitch = undefined;
+
+        // Initialize the new scene.
+        if (newScene.load) {
+          newScene
+            .load()
+            .then(() => {
+              newScene.init();
+              newScene.initialized = true;
+            })
+            .catch((error) => {
+              console.error('Error loading scene:', error);
+            });
+        } else {
+          newScene.init();
+          newScene.initialized = true;
+        }
+      }
     }
   }
 }
 
-export class Scene {
+export abstract class Scene {
   isSubScene = false;
 
   cameras: Camera[] = [];
@@ -170,6 +188,8 @@ export class Scene {
   layers: Entity[][] = [];
 
   entities: Entity[] = [];
+
+  initialized = false;
 
   private entitiesToRemove: Entity[] = [];
 
@@ -182,6 +202,10 @@ export class Scene {
     this.cameras.push(new Camera());
   }
 
+  async load?(): Promise<void>;
+
+  init(): void {}
+
   addEntity(entity: Entity): void {
     this.entities.push(entity);
     this.layers[entity.layer].push(entity);
@@ -193,6 +217,10 @@ export class Scene {
   }
 
   preUpdate(dt: number): void {
+    if (!this.initialized) {
+      return;
+    }
+
     this.removeEntities();
 
     for (const entity of this.entities) {
@@ -203,6 +231,10 @@ export class Scene {
   }
 
   update(dt: number): void {
+    if (!this.initialized) {
+      return;
+    }
+
     for (const entity of this.entities) {
       if (entity.active && entity.update) {
         entity.update(dt);
@@ -211,6 +243,10 @@ export class Scene {
   }
 
   postUpdate(dt: number): void {
+    if (!this.initialized) {
+      return;
+    }
+
     for (const entity of this.entities) {
       if (entity.active && entity.postUpdate) {
         entity.postUpdate(dt);
@@ -219,6 +255,10 @@ export class Scene {
   }
 
   draw(graphics: Graphics): void {
+    if (!this.initialized) {
+      return;
+    }
+
     for (const entity of this.entities) {
       if (entity.active) {
         this.updateLayer(entity);
