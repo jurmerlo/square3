@@ -6,6 +6,7 @@ import { RenderTarget } from './graphics/renderTarget';
 import { Input } from './input/input';
 import { Mat4 } from './math/mat4';
 import { clamp } from './math/mathUtils';
+import { Random } from './math/random';
 import { type SceneType, Scenes } from './scenes';
 import { Time } from './utils/time';
 import { View } from './view/view';
@@ -139,6 +140,8 @@ export class Game {
 
     this.graphics = new Graphics(this.context, this.view);
     addService('graphics', this.graphics);
+
+    addService('random', new Random());
 
     this.input = new Input(canvas);
     addService('input', this.input);

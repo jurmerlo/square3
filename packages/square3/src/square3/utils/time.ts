@@ -35,6 +35,6 @@ export class Time {
       average += frameTime;
     }
 
-    this._fps = Math.floor(1 / (average / this.frameTimes.length));
+    this._fps = Math.round(1 / (average / this.frameTimes.length));
   }
 }

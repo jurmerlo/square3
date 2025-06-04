@@ -273,12 +273,20 @@ export class CTransform {
     if (world) {
       const position = this.getWorldPosition();
       const scale = this.getWorldScale();
-      Mat4.from2dRotationTranslationScale(this.getWorldRotation(), position.x, position.y, scale.x, scale.y, result);
+      Mat4.from2dRotationTranslationScale(
+        toRad(this.getWorldRotation()),
+        position.x,
+        position.y,
+        scale.x,
+        scale.y,
+        result,
+      );
+
       position.put();
       scale.put();
     } else {
       Mat4.from2dRotationTranslationScale(
-        this.rotation,
+        toRad(this.rotation),
         this.position.x,
         this.position.y,
         this.scale.x,

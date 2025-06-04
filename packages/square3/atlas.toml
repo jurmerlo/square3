@@ -1,8 +1,8 @@
 [[atlases]]
-name = "sprites"
-saveFolder = "public/assets"
+name = "bunnyAtlas"
+saveFolder = "public/assets/bunnies"
 folders = [
-  "images"
+  "images/bunnies"
 ]
 trimmed = true
 extrude = 1

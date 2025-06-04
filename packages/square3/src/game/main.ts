@@ -1,9 +1,10 @@
 import { Game, type Input, Scene, type Scenes, inject } from '../square3';
+import { BunniesScene } from './bunnies/bunniesScene';
 import { ShapesScene } from './shapes/shapesScene';
 
 let index = 0;
 
-const scenes = [ShapesScene];
+const scenes = [ShapesScene, BunniesScene];
 
 class BaseScene extends Scene {
   @inject()
