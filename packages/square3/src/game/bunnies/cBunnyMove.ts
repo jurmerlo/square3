@@ -1,4 +1,4 @@
-import { inject, type Random, Vec2 } from '../../square3';
+import { type Random, Vec2, inject } from '../../square3';
 
 export class BunnyMove {
   @inject()

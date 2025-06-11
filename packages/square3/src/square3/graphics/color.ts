@@ -70,6 +70,19 @@ export class Color {
     return result;
   }
 
+  static fromInt(color: number, out?: Color): Color {
+    const result = out ?? new Color();
+
+    const r = (color >> 16) & 0xff;
+    const g = (color >> 8) & 0xff;
+    const b = color & 0xff;
+    const a = (color >> 24) & 0xff;
+
+    Color.fromBytes(r, g, b, a, result);
+
+    return result;
+  }
+
   /**
    * Interpolate between two colors.
    * @param color1 - The start color
