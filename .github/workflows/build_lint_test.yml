@@ -1,0 +1,91 @@
+name: Lint, build and Test Square3
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+jobs:
+  lint-square3:
+    name: 'lint square3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint Monorepo
+        run: pnpm lint
+
+
+  build-test-square3:
+    name: 'build and test square3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Build @square3/square3
+        run: pnpm --filter @square3/square3 build
+
+      - name: Test @square3/square3
+        run: pnpm --filter @square3/square3 test
+
+
+  build-test-square3-atlas:
+    name: 'Build and Test Square3 Atlas'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Build @square3/square3-atlas
+        run: pnpm --filter @square3/square3-atlas build
+
+      - name: Test @square3/square3-atlas
+        run: pnpm --filter @square3/square3-atlas test
+
+
+  build-square3-collision:
+    name: 'Build Square3 Collision'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.11.0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Build @square3/square3-collision
+        run: pnpm --filter @square3/square3-collision build
