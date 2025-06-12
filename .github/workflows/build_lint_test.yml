@@ -93,6 +93,12 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
+      - name: Install @square3 dependencies
+        run: pnpm --filter @square3/square3 install
+
+      - name: Build @square3/square3
+        run: pnpm --filter @square3/square3 build
+
       - name: Install dependencies
         run: pnpm --filter @square3/square3-collision install
 
