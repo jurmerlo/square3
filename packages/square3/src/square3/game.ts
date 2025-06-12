@@ -4,7 +4,6 @@ import { GLContext } from './graphics/glContext';
 import { Graphics } from './graphics/graphics';
 import { RenderTarget } from './graphics/renderTarget';
 import { Input } from './input/input';
-import { Mat4 } from './math/mat4';
 import { clamp } from './math/mathUtils';
 import { Random } from './math/random';
 import { type SceneType, Scenes } from './scenes';
@@ -65,6 +64,11 @@ export type GameOptions = {
    */
   hdpi?: boolean;
 
+  /**
+   * Fill the browser window with the game canvas.
+   */
+  fillWindow?: boolean;
+
   startScene: SceneType;
 };
 
@@ -97,6 +101,12 @@ export class Game {
     gameOptions.title = gameOptions.title || 'Square 3 Game';
     gameOptions.width = gameOptions.width || 800;
     gameOptions.height = gameOptions.height || 600;
+
+    if (gameOptions.fillWindow) {
+      gameOptions.canvasWidth = window.innerWidth;
+      gameOptions.canvasHeight = window.innerHeight;
+    }
+
     gameOptions.canvasWidth = gameOptions.canvasWidth || gameOptions.width;
     gameOptions.canvasHeight = gameOptions.canvasHeight || gameOptions.height;
     gameOptions.canvasId = gameOptions.canvasId || 'square3Canvas';
@@ -116,8 +126,6 @@ export class Game {
       throw new Error(`Canvas with id '${gameOptions.canvasId}' not found.`);
     }
 
-    canvas.width = gameOptions.canvasWidth * pixelRatio;
-    canvas.height = gameOptions.canvasHeight * pixelRatio;
     canvas.style.width = `${gameOptions.canvasWidth}px`;
     canvas.style.height = `${gameOptions.canvasHeight}px`;
 
@@ -130,6 +138,7 @@ export class Game {
       pixelRatio,
       canvas,
       targetFps: gameOptions.targetFps,
+      fillWindow: gameOptions.fillWindow ?? false,
     });
     addService('view', this.view);
 
@@ -157,7 +166,7 @@ export class Game {
     canvas.focus();
     canvas.addEventListener('blur', () => this.toBackground());
     canvas.addEventListener('focus', () => this.toForeground());
-    canvas.addEventListener('resize', () => this.resize(window.innerWidth, window.innerHeight));
+    window.addEventListener('resize', () => this.resize(window.innerWidth, window.innerHeight));
 
     requestAnimationFrame((_time) => {
       this.lastFrameTime = Date.now();
@@ -177,6 +186,12 @@ export class Game {
   }
 
   resize(width: number, height: number): void {
+    if (this.view.fillWindow) {
+      this.view.canvas.style.width = `${width}px`;
+      this.view.canvas.style.height = `${height}px`;
+      this.view.scaleToFit();
+      this.target = new RenderTarget(this.view.viewWidth, this.view.viewHeight);
+    }
     this.scenes.resize(width, height);
   }
 
@@ -227,10 +242,8 @@ export class Game {
     this.graphics.transform.identity();
     this.graphics.color.set(1, 1, 1, 1);
 
-    Mat4.fromScale(this.view.viewScaleX, this.view.viewScaleY, 1, this.graphics.transform);
-
     this.graphics.startBatch();
-    this.graphics.drawRenderTarget(0, 0, this.target);
+    this.graphics.drawRenderTarget(this.view.viewOffsetX, this.view.viewOffsetY, this.target);
     this.graphics.drawBatch();
   }
 }

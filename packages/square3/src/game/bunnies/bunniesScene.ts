@@ -1,4 +1,14 @@
-import { type Assets, Atlas, BitmapFont, type EmitHandler, type Input, Scene, inject } from '../../square3';
+import {
+  type Assets,
+  Atlas,
+  BitmapFont,
+  type EmitHandler,
+  type Input,
+  Scene,
+  type Size,
+  type View,
+  inject,
+} from '../../square3';
 import { EBunny } from './eBunny';
 import { EFpsText } from './eFpsText';
 import { EText } from './eText';
@@ -10,6 +20,9 @@ export class BunniesScene extends Scene {
   @inject()
   private input!: Input;
 
+  @inject()
+  private view!: View;
+
   private bunniesText!: EText;
 
   private bunniesCount = 0;
@@ -18,6 +31,8 @@ export class BunniesScene extends Scene {
 
   private downHandler!: EmitHandler;
   private upHandler!: EmitHandler;
+
+  private viewSize: Size = { width: 100, height: 100 };
 
   override async load(): Promise<void> {
     await this.assets.load(Atlas, 'bunnySprites', 'assets/bunnies/bunnyAtlas');
@@ -32,6 +47,9 @@ export class BunniesScene extends Scene {
 
     const fpsText = new EFpsText({ x: 20, y: 50, font, anchor: { x: 0, y: 0 } });
     this.addEntity(fpsText);
+
+    this.viewSize.width = this.view.viewWidth;
+    this.viewSize.height = this.view.viewHeight;
 
     this.createBunny();
 
@@ -59,8 +77,17 @@ export class BunniesScene extends Scene {
     }
   }
 
+  override resize(width: number, height: number): void {
+    super.resize(width, height);
+    if (this.view.fillWindow) {
+      this.cameras[0].position.set(this.view.viewWidth * 0.5, this.view.viewHeight * 0.5);
+      this.viewSize.width = this.view.viewWidth;
+      this.viewSize.height = this.view.viewHeight;
+    }
+  }
+
   private createBunny(): void {
-    const bunny = new EBunny();
+    const bunny = new EBunny(this.viewSize);
     this.addEntity(bunny);
     this.bunniesCount++;
     this.bunniesText.cText.text = `Bunnies: ${this.bunniesCount}`;

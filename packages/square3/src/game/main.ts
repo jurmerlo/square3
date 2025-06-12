@@ -1,10 +1,11 @@
 import { Game, type Input, Scene, type Scenes, inject } from '../square3';
 import { BunniesScene } from './bunnies/bunniesScene';
+import { ScalingScene } from './scaling/scalingScene';
 import { ShapesScene } from './shapes/shapesScene';
 
 let index = 0;
 
-const scenes = [ShapesScene, BunniesScene];
+const scenes = [BunniesScene, ShapesScene, ScalingScene];
 
 class BaseScene extends Scene {
   @inject()
@@ -31,4 +32,9 @@ class BaseScene extends Scene {
   }
 }
 
-new Game({ startScene: BaseScene });
+new Game({
+  startScene: BaseScene,
+  width: 480,
+  height: 800,
+  fillWindow: true,
+});

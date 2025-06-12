@@ -6,7 +6,7 @@ import {
   Entity,
   type Graphics,
   type Random,
-  type View,
+  type Size,
   inject,
 } from '../../square3';
 import { BunnyMove } from './cBunnyMove';
@@ -24,25 +24,19 @@ export class EBunny extends Entity {
   @inject()
   private random!: Random;
 
-  @inject()
-  private view!: View;
-
-  private readonly maxX: number;
-  private readonly maxY: number;
-
   private readonly gravity = 0.5;
 
-  constructor() {
-    super();
+  private viewSize: Size;
 
-    this.maxX = this.view.viewWidth;
-    this.maxY = this.view.viewHeight;
+  constructor(viewSize: Size) {
+    super();
+    this.viewSize = viewSize;
 
     this.transform = new CTransform();
 
     const atlas = this.assets.get(Atlas, 'bunnySprites');
 
-    this.sprite = new CSprite({ atlas, frameName: 'bunny', color: this.random.color(0.3) });
+    this.sprite = new CSprite({ atlas, frameName: 'bunny', color: this.random.color(0.3, undefined, false) });
 
     this.move = new BunnyMove();
   }
@@ -58,16 +52,16 @@ export class EBunny extends Entity {
     if (position.x < 0) {
       position.x = 0;
       this.move.speed.x *= -1;
-    } else if (position.x > this.maxX) {
-      position.x = this.maxX;
+    } else if (position.x > this.viewSize.width) {
+      position.x = this.viewSize.width;
       this.move.speed.x *= -1;
     }
 
     if (position.y < 0) {
       position.y = 0;
       this.move.speed.y = 0;
-    } else if (position.y > this.maxY) {
-      position.y = this.maxY;
+    } else if (position.y > this.viewSize.height) {
+      position.y = this.viewSize.height;
       this.move.speed.y *= -0.8;
 
       if (this.random.float(0, 1) > 0.5) {
