@@ -1,5 +1,5 @@
 {
-  "name": "@square3/square3-collision",
+  "name": "@square3/collision",
   "version": "0.1.0",
   "type": "module",
   "exports": {

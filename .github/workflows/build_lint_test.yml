@@ -69,13 +69,13 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm --filter @square3/square3-atlas install
+        run: pnpm --filter @square3/atlas install
 
-      - name: Build @square3/square3-atlas
-        run: pnpm --filter @square3/square3-atlas build
+      - name: Build @square3/atlas
+        run: pnpm --filter @square3/atlas build
 
-      - name: Test @square3/square3-atlas
-        run: pnpm --filter @square3/square3-atlas test
+      - name: Test @square3/atlas
+        run: pnpm --filter @square3/atlas test
 
 
   build-square3-collision:
@@ -100,7 +100,7 @@ jobs:
         run: pnpm --filter @square3/square3 build
 
       - name: Install dependencies
-        run: pnpm --filter @square3/square3-collision install
+        run: pnpm --filter @square3/collision install
 
-      - name: Build @square3/square3-collision
-        run: pnpm --filter @square3/square3-collision build
+      - name: Build @square3/collision
+        run: pnpm --filter @square3/collision build
