@@ -1,4 +1,5 @@
-import { Assets } from './assets';
+import { Assets } from './assets/assets';
+import { registerBuiltinLoaders } from './assets/registerBuiltins';
 import { addService } from './di/services';
 import { GLContext } from './graphics/glContext';
 import { Graphics } from './graphics/graphics';
@@ -6,7 +7,7 @@ import { RenderTarget } from './graphics/renderTarget';
 import { Input } from './input/input';
 import { clamp } from './math/mathUtils';
 import { Random } from './math/random';
-import { type SceneType, Scenes } from './scenes';
+import { type SceneType, Scenes } from './scenes/scenes';
 import { Time } from './utils/time';
 import { View } from './view/view';
 
@@ -69,6 +70,9 @@ export type GameOptions = {
    */
   fillWindow?: boolean;
 
+  /**
+   * The scene to start the game with.
+   */
   startScene: SceneType;
 };
 
@@ -160,7 +164,7 @@ export class Game {
     addService('scenes', this.scenes);
 
     const assets = new Assets();
-    assets.registerBuiltinLoaders();
+    registerBuiltinLoaders(assets);
     addService('assets', assets);
 
     canvas.focus();
@@ -192,7 +196,7 @@ export class Game {
       this.view.scaleToFit();
       this.target = new RenderTarget(this.view.viewWidth, this.view.viewHeight);
     }
-    this.scenes.resize(width, height);
+    this.scenes.onResize(width, height);
   }
 
   private loop(): void {

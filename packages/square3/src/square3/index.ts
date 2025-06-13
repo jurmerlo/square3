@@ -1,4 +1,11 @@
-export * from './assets';
+export * from './assets/assets';
+export * from './assets/atlasLoader';
+export * from './assets/bitmapFontLoader';
+export * from './assets/imageLoader';
+export * from './assets/soundLoader';
+export * from './assets/textLoader';
+export * from './assets/tilesetLoader';
+export * from './assets/registerBuiltins';
 
 export * from './audio/audio';
 export * from './audio/audioChannel';
@@ -18,7 +25,6 @@ export * from './di/services';
 
 export * from './emitter/emitter';
 
-export * from './entity';
 export * from './game';
 
 export * from './graphics/animation';
@@ -44,7 +50,9 @@ export * from './math/vec2';
 export * from './math/vec3';
 export * from './math/xy';
 
-export * from './scenes';
+export * from './scenes/entity';
+export * from './scenes/scene';
+export * from './scenes/scenes';
 
 export * from './tiles/tileset';
 

@@ -1,5 +1,6 @@
 {
   "name": "@square3/square3-monorepo",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.12.1",
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
   }
