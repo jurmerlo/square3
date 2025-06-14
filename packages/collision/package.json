@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "types": "./index.d.ts",
-    "import": "./index.js"
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
   },
   "files": ["dist"],
   "scripts": {

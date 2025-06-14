@@ -1,6 +1,7 @@
 packages:
   - 'packages/*'
   - 'game-tests/square3/*'
+  - 'game-tests/collision/*'
 
 catalog:
   "@types/node": ^22.15.31 
