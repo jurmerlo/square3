@@ -1,9 +1,0 @@
-[[atlases]]
-name = "bunnyAtlas"
-saveFolder = "public/assets/bunnies"
-folders = [
-  "images/bunnies"
-]
-trimmed = true
-extrude = 1
-packMethod = "optimal"

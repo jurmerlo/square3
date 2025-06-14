@@ -3,22 +3,17 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "types": "./dist/square3-collision.d.ts",
-    "import": "./dist/square3-collision.js"
+    "types": "./index.d.ts",
+    "import": "./index.js"
   },
-  "files": ["./dist/square3-collision.d.ts", "./dist/square3-collision.js"],
+  "files": ["dist"],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -p tsconfig.build.json && vite build",
-    "preview": "vite preview",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "biome check"
   },
   "devDependencies": {
     "@square3/square3": "workspace:*",
-    "@types/node": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@square3/square3": "workspace:*"

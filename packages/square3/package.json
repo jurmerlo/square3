@@ -3,24 +3,19 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "types": "./dist/square3.d.ts",
-    "import": "./dist/square3.js"
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
   },
-  "files": ["./dist/square3.d.ts", "./dist/square3.js"],
+  "files": ["dist"],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -p tsconfig.build.json && vite build",
-    "preview": "vite preview",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "biome check",
     "test": "vitest run",
     "atlas": "square3-atlas pack"
   },
   "devDependencies": {
     "@square3/atlas": "workspace:*",
-    "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "vitest": "catalog:"
   }
 }
