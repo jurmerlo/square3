@@ -1,0 +1,20 @@
+{
+  "name": "@square3-tests/bunnies",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "atlas": "square3-atlas pack"
+  },
+  "dependencies": {
+    "@square3/square3": "workspace:*"
+  },
+  "devDependencies": {
+    "@square3/atlas": "workspace:*",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

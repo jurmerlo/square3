@@ -104,3 +104,33 @@ jobs:
 
       - name: Build @square3/collision
         run: pnpm --filter @square3/collision build
+
+  build-square3-test-games:
+    name: 'Build Square3 Test Games'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        game: ["@square3-tests/bunnies"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install @square3 dependencies
+        run: pnpm --filter @square3/square3 install
+
+      - name: Build @square3/square3
+        run: pnpm --filter @square3/square3 build
+
+      - name: Install dependencies
+        run: pnpm --filter ${{ matrix.game }} install
+
+      - name: Build game-tests/square3
+        run: pnpm --filter ${{ matrix.game }} build
