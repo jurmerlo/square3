@@ -1,0 +1,9 @@
+[[atlases]]
+name = "bunnyAtlas"
+saveFolder = "public/assets"
+folders = [
+  "images"
+]
+trimmed = true
+extrude = 1
+packMethod = "optimal"
