@@ -51,7 +51,7 @@ export abstract class Scene {
    */
   private layerTracking: Record<number, number> = {};
 
-  private constructor() {
+  constructor() {
     for (let i = 0; i < 32; i++) {
       this.layers.push([]);
     }

@@ -97,6 +97,11 @@ export type BodyOptions = {
    * Custom user data associated with the body.
    */
   userData?: unknown;
+
+  /**
+   * The mass of the body, used for physics calculations.
+   */
+  mass?: number;
 };
 
 /**
@@ -218,6 +223,8 @@ export class Body {
    */
   wasTriggeredBy: Body[] = [];
 
+  mass: number;
+
   /**
    * Creates a new Body instance.
    * @param options - The options to initialize the body with.
@@ -234,6 +241,7 @@ export class Body {
     this.canCollide = options.canCollide ?? new Bitset(COLLIDING_SIDES.ALL);
     this.tags = options.tags ?? [];
     this.userData = options.userData;
+    this.mass = options.mass ?? 1;
 
     this.drag = new Vec2();
     this.velocity = new Vec2();

@@ -100,15 +100,14 @@ function separateX(body1: Body, body2: Body): boolean {
     bounds1.x += overlap;
     bounds2.x -= overlap;
 
-    let velocity1 = body2.velocity.x;
-    let velocity2 = body1.velocity.x;
-    const average = (velocity1 + velocity2) * 0.5;
+    const velocity1 = body2.velocity.x;
+    const velocity2 = body1.velocity.x;
+    const mass1 = body1.mass;
+    const mass2 = body2.mass;
+    const momentum = mass1 * velocity1 + mass2 * velocity2;
 
-    velocity1 -= average;
-    velocity2 -= average;
-
-    body1.velocity.x = average + velocity1 * body1.bounce;
-    body2.velocity.x = average + velocity2 * body2.bounce;
+    body1.velocity.x = (momentum + body1.bounce * mass2 * (velocity2 - velocity1)) / (mass1 + mass2);
+    body2.velocity.x = (momentum + body2.bounce * mass1 * (velocity1 - velocity2)) / (mass1 + mass2);
   }
 
   return true;
@@ -180,15 +179,14 @@ function separateY(body1: Body, body2: Body): boolean {
     bounds1.y += overlap;
     bounds2.y -= overlap;
 
-    let velocity1 = body2.velocity.y;
-    let velocity2 = body1.velocity.y;
-    const average = (velocity1 + velocity2) * 0.5;
+    const velocity1 = body2.velocity.y;
+    const velocity2 = body1.velocity.y;
+    const mass1 = body1.mass;
+    const mass2 = body2.mass;
+    const momentum = mass1 * velocity1 + mass2 * velocity2;
 
-    velocity1 -= average;
-    velocity2 -= average;
-
-    body1.velocity.y = average + velocity1 * body1.bounce;
-    body2.velocity.y = average + velocity2 * body2.bounce;
+    body1.velocity.y = (momentum + body1.bounce * mass2 * (velocity2 - velocity1)) / (mass1 + mass2);
+    body2.velocity.y = (momentum + body2.bounce * mass1 * (velocity1 - velocity2)) / (mass1 + mass2);
   }
 
   return true;

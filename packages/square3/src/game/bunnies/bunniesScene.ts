@@ -77,10 +77,10 @@ export class BunniesScene extends Scene {
     }
   }
 
-  override resize(width: number, height: number): void {
-    super.resize(width, height);
+  override onResize(width: number, height: number): void {
+    super.onResize(width, height);
     if (this.view.fillWindow) {
-      this.cameras[0].position.set(this.view.viewWidth * 0.5, this.view.viewHeight * 0.5);
+      this.camera.position.set(this.view.viewWidth * 0.5, this.view.viewHeight * 0.5);
       this.viewSize.width = this.view.viewWidth;
       this.viewSize.height = this.view.viewHeight;
     }

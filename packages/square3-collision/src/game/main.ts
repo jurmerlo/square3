@@ -116,7 +116,7 @@ class CollisionScene extends Scene {
     this.input.on({
       event: 'mousePressed',
       callback: (_, x, y): void => {
-        const pos = this.cameras[0].screenToWorld(x, y);
+        const pos = this.camera.screenToWorld(x, y);
         const newBox = new BoxEntity({
           x: pos.x,
           y: pos.y,
