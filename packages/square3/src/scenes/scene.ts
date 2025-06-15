@@ -196,7 +196,12 @@ export abstract class Scene {
       if (entities.length > 0 && !camera.ignoredLayers.includes(i)) {
         for (const entity of entities) {
           if (entity.active && entity.draw) {
+            graphics.pushTransform();
+            const matrix = entity.transform.getMatrix();
+            graphics.applyTransform(matrix);
             entity.draw(graphics);
+            graphics.popTransform();
+            matrix.put();
           }
         }
       }
