@@ -12,6 +12,7 @@
     /* Linting */
     "strict": true,
     "noImplicitAny": true,
+    "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,

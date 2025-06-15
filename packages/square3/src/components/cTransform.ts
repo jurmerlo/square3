@@ -1,4 +1,3 @@
-import type { Graphics } from '../graphics/graphics.js';
 import { Mat4 } from '../math/mat4.js';
 import { toRad } from '../math/mathUtils.js';
 import { Vec2 } from '../math/vec2.js';
@@ -61,6 +60,8 @@ export class CTransform {
    * The parent transform.
    */
   parent?: CTransform;
+
+  useWorldTransform = true;
 
   /**
    * Create a new transform instance.
@@ -264,13 +265,12 @@ export class CTransform {
 
   /**
    * Get a matrix representation of this transform.
-   * @param world If true, the matrix will be in world space, otherwise in local space.
    * @param out Optional output matrix to store the result.
    * @returns The matrix representation of this transform.
    */
-  getMatrix(world = true, out?: Mat4): Mat4 {
+  getMatrix(out?: Mat4): Mat4 {
     const result = out ?? Mat4.get();
-    if (world) {
+    if (this.useWorldTransform) {
       const position = this.getWorldPosition();
       const scale = this.getWorldScale();
       Mat4.from2dRotationTranslationScale(
@@ -296,13 +296,5 @@ export class CTransform {
     }
 
     return result;
-  }
-
-  drawWithTransform(graphics: Graphics, draw: (graphics: Graphics) => void, useWorldTransform = true): void {
-    graphics.pushTransform();
-    const matrix = this.getMatrix(useWorldTransform);
-    graphics.applyTransform(matrix);
-    draw(graphics);
-    graphics.popTransform();
   }
 }

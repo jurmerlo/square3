@@ -1,3 +1,4 @@
+import { CTransform, type CTransformOptions } from '../components/cTransform.js';
 import type { Graphics } from '../graphics/graphics.js';
 
 const HIGHEST_VALUE = 4294967296;
@@ -39,6 +40,8 @@ export type EntityOptions = {
    * A tag to identify the entity. Defaults to 'default'.
    */
   tag?: string;
+
+  transformOptions?: CTransformOptions;
 };
 
 /**
@@ -75,6 +78,8 @@ export abstract class Entity {
    */
   layer: number;
 
+  transform: CTransform;
+
   /**
    * Reset the entity IDs to allow reuse.
    */
@@ -87,12 +92,13 @@ export abstract class Entity {
    * Create a new entity.
    * @param options Options for the entity.
    */
-  constructor({ active, layer, tag }: EntityOptions = {}) {
+  constructor({ active, layer, tag, transformOptions }: EntityOptions = {}) {
     this.active = active ?? true;
     this.layer = layer ?? 0;
     this.tag = tag ?? 'default';
     this.id = getNextId();
     this.layerUpdated = false;
+    this.transform = new CTransform(transformOptions);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Body, type BodyType, type World } from '@square3/collision';
-import { CBoxShape, CTransform, Color, Entity, type Graphics, type Random, inject } from '@square3/square3';
+import { CBoxShape, Color, Entity, type Graphics, type Random, inject } from '@square3/square3';
 
 type BoxEntityOptions = {
   x: number;
@@ -12,8 +12,6 @@ type BoxEntityOptions = {
 };
 
 export class BoxEntity extends Entity {
-  private cTransform: CTransform;
-
   private cBoxShape: CBoxShape;
 
   private body: Body;
@@ -24,11 +22,9 @@ export class BoxEntity extends Entity {
   private random!: Random;
 
   constructor({ x, y, type, world, color, width, height }: BoxEntityOptions) {
-    super();
+    super({ transformOptions: { x, y } });
 
     this.world = world;
-
-    this.cTransform = new CTransform({ x, y });
 
     const boxWidth = width ?? this.random.int(20, 40);
     const boxHeight = height ?? this.random.int(20, 40);
@@ -44,17 +40,19 @@ export class BoxEntity extends Entity {
   }
 
   override preUpdate(_dt: number): void {
-    this.body.updatePosition(this.cTransform.position.x, this.cTransform.position.y);
+    if (this.transform) {
+      this.body.updatePosition(this.transform.position.x, this.transform.position.y);
+    }
   }
 
   override postUpdate(_dt: number): void {
-    this.body.getPosition(this.cTransform.position);
+    if (this.transform) {
+      this.body.getPosition(this.transform.position);
+    }
   }
 
   override draw(graphics: Graphics): void {
-    this.cTransform.drawWithTransform(graphics, () => {
-      this.cBoxShape.draw(graphics);
-    });
+    this.cBoxShape.draw(graphics);
   }
 
   override destroy(): void {

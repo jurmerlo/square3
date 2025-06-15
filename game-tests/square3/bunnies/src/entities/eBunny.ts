@@ -1,19 +1,7 @@
-import {
-  type Assets,
-  Atlas,
-  CSprite,
-  CTransform,
-  Entity,
-  type Graphics,
-  type Random,
-  type Size,
-  inject,
-} from '@square3/square3';
+import { type Assets, Atlas, CSprite, Entity, type Graphics, type Random, type Size, inject } from '@square3/square3';
 import { BunnyMove } from '../components/cBunnyMove';
 
 export class EBunny extends Entity {
-  transform: CTransform;
-
   sprite: CSprite;
 
   move: BunnyMove;
@@ -31,8 +19,6 @@ export class EBunny extends Entity {
   constructor(viewSize: Size) {
     super();
     this.viewSize = viewSize;
-
-    this.transform = new CTransform();
 
     const atlas = this.assets.get(Atlas, 'bunnySprites');
 
@@ -71,8 +57,6 @@ export class EBunny extends Entity {
   }
 
   override draw(graphics: Graphics): void {
-    this.transform.drawWithTransform(graphics, () => {
-      this.sprite.draw(graphics);
-    });
+    this.sprite.draw(graphics);
   }
 }
