@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        game: ["@square3-tests/box-stacking"]
+        game: ["@square3-tests/box-stacking", "@square3-tests/push-mass"]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

@@ -100,8 +100,8 @@ function separateX(body1: Body, body2: Body): boolean {
     bounds1.x += overlap;
     bounds2.x -= overlap;
 
-    const velocity1 = body2.velocity.x;
-    const velocity2 = body1.velocity.x;
+    const velocity1 = body1.velocity.x;
+    const velocity2 = body2.velocity.x;
     const mass1 = body1.mass;
     const mass2 = body2.mass;
     const momentum = mass1 * velocity1 + mass2 * velocity2;
@@ -179,8 +179,8 @@ function separateY(body1: Body, body2: Body): boolean {
     bounds1.y += overlap;
     bounds2.y -= overlap;
 
-    const velocity1 = body2.velocity.y;
-    const velocity2 = body1.velocity.y;
+    const velocity1 = body1.velocity.y;
+    const velocity2 = body2.velocity.y;
     const mass1 = body1.mass;
     const mass2 = body2.mass;
     const momentum = mass1 * velocity1 + mass2 * velocity2;
