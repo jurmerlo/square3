@@ -52,6 +52,7 @@ export * from './tween/tween.js';
 
 export * from './utils/bitset.js';
 export * from './utils/browserInfo.js';
+export * from './utils/pathUtils.js';
 export * from './utils/time.js';
 
 export * from './view/camera.js';
