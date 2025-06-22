@@ -70,6 +70,9 @@ export class LdtkLayer {
       this.type = 'AutoLayer';
       this.id = 'Empty';
     }
+    if (this.tiles.length > 0) {
+      this.visibleBounds.set(0, 0, this.tiles[0].length, this.tiles.length);
+    }
   }
 
   clone(): LdtkLayer {

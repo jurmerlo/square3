@@ -1,0 +1,11 @@
+[[atlases]]
+name = "tiles"
+saveFolder = "testFiles"
+folders = [
+  "testFiles/tiles",
+]
+trimmed = false
+extrude = 1
+packMethod = "basic"
+noData = true
+maxWidth = 180

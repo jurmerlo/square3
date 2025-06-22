@@ -17,8 +17,11 @@
   "license": "MIT",
   "author": "Jurmerlo",
   "devDependencies": {
+    "@square3/atlas": "workspace:*",
     "@square3/square3": "workspace:*",
-    "typescript": "catalog:"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "@square3/square3": "workspace:*"

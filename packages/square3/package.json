@@ -14,7 +14,6 @@
     "atlas": "square3-atlas pack"
   },
   "devDependencies": {
-    "@square3/atlas": "workspace:*",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
