@@ -8,7 +8,6 @@
     "useDefineForClassFields": true,
     "declaration": true,
 
-    /* Linting */
     "strict": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -16,5 +15,5 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
-  },
+  }
 }

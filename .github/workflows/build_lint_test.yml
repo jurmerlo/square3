@@ -105,12 +105,9 @@ jobs:
       - name: Build @square3/collision
         run: pnpm --filter @square3/collision build
 
-  build-square3-test-games:
-    name: 'Build Square3 Test Games'
+  build-square3-ldtk:
+    name: 'Build Square3 LDtk'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        game: ["@square3-tests/bunnies"]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -130,17 +127,17 @@ jobs:
         run: pnpm --filter @square3/square3 build
 
       - name: Install dependencies
-        run: pnpm --filter ${{ matrix.game }} install
+        run: pnpm --filter @square3/ldtk install
 
-      - name: Build game-tests/square3
-        run: pnpm --filter ${{ matrix.game }} build
+      - name: Build @square3/ldtk
+        run: pnpm --filter @square3/ldtk build
 
-  build-collision-test-games:
-    name: 'Build Collision Test Games'
+      - name: Test @square3/ldtk
+        run: pnpm --filter @square3/ldtk test
+
+  build-square3-test-games:
+    name: 'Build Square3 Test Games'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        game: ["@square3-tests/box-stacking", "@square3-tests/push-mass"]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -153,20 +150,22 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Install @square3 dependencies
-        run: pnpm --filter @square3/square3 install
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Build @square3/square3
         run: pnpm --filter @square3/square3 build
-
-      - name: Install @square3/collision dependencies
-        run: pnpm --filter @square3/collision install
 
       - name: Build @square3/collision
         run: pnpm --filter @square3/collision build
 
-      - name: Install dependencies
-        run: pnpm --filter ${{ matrix.game }} install
+      # Square3 Test Games
+      - name: Build @square3-tests/bunnies
+        run: pnpm --filter @square-tests/bunnies build
 
-      - name: Build game-tests/square3
-        run: pnpm --filter ${{ matrix.game }} build
+      # Collision Test Games
+      - name: Build @square3-tests/box-stacking
+        run: pnpm --filter @square3-tests/box-stacking build
+
+      - name: Build @square3-tests/push-mass
+        run: pnpm --filter @square3-tests/push-mass build

@@ -1,6 +1,6 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { LdtkEntity } from './ldtkEntity';
-import { readFileSync } from 'node:fs';
 import type { LdtkProjectJson } from './ldtkJson';
 
 describe('LdtkEntity', () => {

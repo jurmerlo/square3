@@ -1,8 +1,7 @@
-import { beforeAll, describe, expect, it } from 'vitest';
-
-import { LdtkLayer } from './ldtkLayer';
 import { readFileSync } from 'node:fs';
+import { beforeAll, describe, expect, it } from 'vitest';
 import type { LdtkProjectJson } from './ldtkJson';
+import { LdtkLayer } from './ldtkLayer';
 
 describe('LdtkLayer', () => {
   let project: LdtkProjectJson;
