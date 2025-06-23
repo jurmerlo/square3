@@ -4,8 +4,8 @@ packages:
   - 'game-tests/collision/*'
 
 catalog:
-  "@types/node": ^22.15.31 
+  "@types/node": ^22.15.32 
   typescript: ~5.8.3
   vite: ^6.3.5
-  vitest: ^3.2.3
+  vitest: ^3.2.4
   vite-plugin-dts: ^4.5.4
