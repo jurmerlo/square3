@@ -109,11 +109,26 @@ importers:
         specifier: 'catalog:'
         version: 5.8.3
 
-  packages/square3:
+  packages/ldtk:
     devDependencies:
       '@square3/atlas':
         specifier: workspace:*
         version: link:../atlas
+      '@square3/square3':
+        specifier: workspace:*
+        version: link:../square3
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.15.31
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.3(@types/node@22.15.31)
+
+  packages/square3:
+    devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.8.3

@@ -15,5 +15,8 @@
   "devDependencies": {
     "typescript": "catalog:",
     "vite": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@10.12.1",
+  "license": "MIT",
+  "author": "Jurmerlo"
 }

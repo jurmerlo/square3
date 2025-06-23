@@ -1,0 +1,29 @@
+{
+  "name": "@square3/ldtk",
+  "version": "0.1.0",
+  "description": "Ldtk Loader for Square3",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "biome check",
+    "test": "vitest run"
+  },
+  "keywords": [],
+  "packageManager": "pnpm@10.12.1",
+  "license": "MIT",
+  "author": "Jurmerlo",
+  "devDependencies": {
+    "@square3/atlas": "workspace:*",
+    "@square3/square3": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@square3/square3": "workspace:*"
+  }
+}

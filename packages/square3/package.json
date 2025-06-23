@@ -14,8 +14,8 @@
     "atlas": "square3-atlas pack"
   },
   "devDependencies": {
-    "@square3/atlas": "workspace:*",
     "typescript": "catalog:",
     "vitest": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@10.12.1"
 }

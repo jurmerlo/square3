@@ -13,9 +13,6 @@
     "test": "vitest run"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "@ltd/j-toml": "^1.38.0",
     "commander": "^14.0.0",
@@ -26,5 +23,8 @@
     "@types/node": "catalog:",
     "@types/pngjs": "^6.0.5",
     "vitest": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@10.12.1",
+  "license": "MIT",
+  "author": "Jurmerlo"
 }
