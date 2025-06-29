@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { Atlas } from './atlas.js';
 import type { AtlasConfig } from './atlasConfig.js';
-import { Packer } from './packer.js';
+import { AtlasPacker } from './atlasPacker.js';
 
 describe('Packer', () => {
   let config: AtlasConfig;
@@ -20,7 +20,7 @@ describe('Packer', () => {
   });
 
   it('Should pack the rectangles in basic mode.', () => {
-    const packer = new Packer(atlas.rects, 'basic', 4096, 4096);
+    const packer = new AtlasPacker(atlas.rects, 'basic', 4096, 4096);
     const success = packer.pack();
 
     expect(success).toBe(true);
@@ -29,7 +29,7 @@ describe('Packer', () => {
   });
 
   it('Should pack the rectangles in optimal mode.', () => {
-    const packer = new Packer(atlas.rects, 'optimal', 4096, 4096);
+    const packer = new AtlasPacker(atlas.rects, 'optimal', 4096, 4096);
     const success = packer.pack();
 
     expect(success).toBe(true);
@@ -38,7 +38,7 @@ describe('Packer', () => {
   });
 
   it('Should pack the rectangles using a max width.', () => {
-    const packer = new Packer(atlas.rects, 'optimal', 100, 4096);
+    const packer = new AtlasPacker(atlas.rects, 'optimal', 100, 4096);
     const success = packer.pack();
 
     expect(success).toBe(true);
@@ -47,7 +47,7 @@ describe('Packer', () => {
   });
 
   it('Should pack the rectangles using a max height.', () => {
-    const packer = new Packer(atlas.rects, 'optimal', 4096, 100);
+    const packer = new AtlasPacker(atlas.rects, 'optimal', 4096, 100);
     const success = packer.pack();
 
     expect(success).toBe(true);
@@ -56,7 +56,7 @@ describe('Packer', () => {
   });
 
   it("Should not pack the rectangles if they don't fit", () => {
-    const packer = new Packer(atlas.rects, 'optimal', 90, 90);
+    const packer = new AtlasPacker(atlas.rects, 'optimal', 90, 90);
     const success = packer.pack();
 
     expect(success).toBe(false);

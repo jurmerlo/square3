@@ -45,6 +45,7 @@ export * from './scenes/entity.js';
 export * from './scenes/scene.js';
 export * from './scenes/scenes.js';
 
+export * from './tiles/tilemapColliders.js';
 export * from './tiles/tileset.js';
 
 export * from './tween/easing.js';

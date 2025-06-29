@@ -29,7 +29,7 @@ import { Rectangle } from './rectangle.js';
  * Subtract 1 pixels from the bounds width. if it is smaller than the width of the widest rectangle the process is
  * done. If not restart the process with the new bounds.
  */
-export class Packer {
+export class AtlasPacker {
   /**
    * The current smallest bounds of the packed rectangles.
    */

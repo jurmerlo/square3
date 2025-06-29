@@ -159,6 +159,9 @@ jobs:
       - name: Build @square3/collision
         run: pnpm --filter @square3/collision build
 
+      - name : Build @square3/ldtk
+        run: pnpm --filter @square3/ldtk build
+
       # Square3 Test Games
       - name: Build @square3-tests/bunnies
         run: pnpm --filter @square-tests/bunnies build
