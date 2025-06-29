@@ -1,10 +1,10 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs';
-import Path from 'node:path';
+import path from 'node:path';
 import { PNG } from 'pngjs';
 
 import type { AtlasConfig } from './atlasConfig.js';
+import { AtlasPacker } from './atlasPacker.js';
 import { Image } from './image.js';
-import { Packer } from './packer.js';
 import { Rectangle } from './rectangle.js';
 
 /**
@@ -64,7 +64,7 @@ export class Atlas {
     // Get all the PNG images from the folders in the config. This is not recursive.
     if (config.folders) {
       for (const folder of config.folders) {
-        const fullPath = Path.join(process.cwd(), folder);
+        const fullPath = path.join(process.cwd(), folder);
         if (existsSync(fullPath) && lstatSync(fullPath).isDirectory()) {
           const paths = this.getAllImagesPathsFromFolder(fullPath);
           this.imagePaths = this.imagePaths.concat(paths);
@@ -77,7 +77,7 @@ export class Atlas {
     // Get all the PNG images from the files in the config.
     if (config.files) {
       for (const file of config.files) {
-        const fullPath = Path.join(process.cwd(), file);
+        const fullPath = path.join(process.cwd(), file);
         const imagePath = this.getFullImagePath(fullPath);
         if (imagePath) {
           this.imagePaths.push(imagePath);
@@ -127,7 +127,7 @@ export class Atlas {
     }
 
     // Perform the actual packing.
-    const packer = new Packer(
+    const packer = new AtlasPacker(
       this.rects,
       this.config.packMethod ?? 'optimal',
       this.config.maxWidth ?? 4096,
@@ -161,13 +161,13 @@ export class Atlas {
 
   /**
    * Loops through a folder and gets all PNG file paths. This is not recursive.
-   * @param path The folder path to search for PNG files.
+   * @param imagePath The folder path to search for PNG files.
    * @returns A list of image paths.
    */
-  private getAllImagesPathsFromFolder(path: string): ImagePath[] {
+  private getAllImagesPathsFromFolder(imagePath: string): ImagePath[] {
     const imagePaths: ImagePath[] = [];
-    for (const file of readdirSync(path)) {
-      const fullPath = Path.join(path, file);
+    for (const file of readdirSync(imagePath)) {
+      const fullPath = path.join(imagePath, file);
       if (lstatSync(fullPath).isFile()) {
         const imagePath = this.getFullImagePath(fullPath);
         if (imagePath) {
@@ -181,22 +181,22 @@ export class Atlas {
 
   /**
    * Creates a path with the direct parent folder name and file name for easy use later.
-   * @param path The full path to the image file.
+   * @param imagePath The full path to the image file.
    * @returns The created ImagePath object, or null if the file is not a PNG.
    */
-  private getFullImagePath(path: string): ImagePath | null {
-    if (Path.extname(path) === '.png') {
-      const folders = Path.dirname(path).split(Path.sep);
+  private getFullImagePath(imagePath: string): ImagePath | null {
+    if (path.extname(imagePath) === '.png') {
+      const folders = path.dirname(imagePath).split(path.sep);
       const folder = folders[folders.length - 1];
 
       return {
-        fullPath: path,
+        fullPath: imagePath,
         folderName: folder,
-        fileName: Path.basename(path, Path.extname(path)),
+        fileName: path.basename(imagePath, path.extname(imagePath)),
       };
     }
 
-    process.stdout.write(`Warning: "${path}" is not a PNG image.\n`);
+    process.stdout.write(`Warning: "${imagePath}" is not a PNG image.\n`);
     return null;
   }
 

@@ -202,6 +202,17 @@ export class Image {
     }
   }
 
+  isEmpty(): boolean {
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.getPixel(x, y).alpha !== 0) {
+          return false; // Found a non-transparent pixel.
+        }
+      }
+    }
+    return true; // All pixels are transparent.
+  }
+
   /**
    * Trims transparent borders from the image.
    * @returns The x and y offsets of the trimmed image.

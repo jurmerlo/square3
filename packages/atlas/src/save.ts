@@ -4,6 +4,7 @@ import { PNG } from 'pngjs';
 
 import type { Atlas } from './atlas.js';
 import type { Frame } from './frame.js';
+import type { Tileset } from './tileset.js';
 
 /**
  * Saves the atlas image to a PNG file.
@@ -31,6 +32,28 @@ export function saveAtlasImage(name: string, saveFolder: string, atlas: Atlas): 
     }
   } else {
     throw new Error('Atlas image is undefined. Cannot save.');
+  }
+}
+
+export function saveTilesetImage(name: string, saveFolder: string, tileset: Tileset): void {
+  // Ensure the save folder exists.
+  if (!existsSync(saveFolder)) {
+    mkdirSync(saveFolder, { recursive: true });
+  }
+
+  const path = Path.join(saveFolder, `${name}.png`);
+  if (tileset.image) {
+    try {
+      const buffer = PNG.sync.write(tileset.image.pngData, {
+        colorType: 6,
+      });
+      writeFileSync(path, buffer);
+      process.stdout.write(`Tileset image saved to: ${path}\n`);
+    } catch (error) {
+      throw new Error(`Failed to save tileset image: ${(error as Error).message}`);
+    }
+  } else {
+    throw new Error('Tileset image is undefined. Cannot save.');
   }
 }
 

@@ -1,3 +1,5 @@
+import type { TilesetConfig } from './tilesetConfig.js';
+
 /**
  * Configuration options that are read from the toml file.
  */
@@ -75,7 +77,8 @@ export type AtlasConfig = {
  * Helper to load the configs.
  */
 export type AtlasConfigList = {
-  atlases: AtlasConfig[];
+  atlases?: AtlasConfig[];
+  tilesets?: TilesetConfig[];
 };
 
 /**

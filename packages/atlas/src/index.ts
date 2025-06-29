@@ -1,11 +1,12 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import Path from 'node:path';
 import TOML from '@ltd/j-toml';
 
 import { Command } from 'commander';
 import { Atlas } from './atlas.js';
 import type { AtlasConfigList } from './atlasConfig.js';
-import { saveAtlasImage, saveJsonData } from './save.js';
+import { saveAtlasImage, saveJsonData, saveTilesetImage } from './save.js';
+import { Tileset } from './tileset.js';
 
 type PackAtlasOptions = {
   project?: string;
@@ -15,7 +16,7 @@ type PackAtlasOptions = {
  * Packs atlases based on the provided configuration file.
  * @param userPath The path to the TOML configuration file. Defaults to "aeony.toml" if not provided.
  */
-function packAtlas(userPath?: string): void {
+function pack(userPath?: string): void {
   let configPath = 'atlas.toml';
 
   // Use the provided path if specified.
@@ -51,8 +52,20 @@ function packAtlas(userPath?: string): void {
   }
 
   // Validate the configuration.
-  if (!configList.atlases || configList.atlases.length === 0) {
-    process.stdout.write('No atlaeses in config file.\n');
+  if (
+    (!configList.atlases || configList.atlases.length === 0) &&
+    (!configList.tilesets || configList.tilesets.length === 0)
+  ) {
+    process.stdout.write('No atlases or tilesets in config file.\n');
+    return;
+  }
+
+  packAtlases(configList);
+  padTilesets(configList);
+}
+
+function packAtlases(configList: AtlasConfigList): void {
+  if (!configList.atlases) {
     return;
   }
 
@@ -79,10 +92,6 @@ function packAtlas(userPath?: string): void {
 
     // Create the save folder if it does not exist.
     const saveFolder = Path.join(process.cwd(), config.saveFolder);
-    if (!existsSync(saveFolder)) {
-      mkdirSync(saveFolder, { recursive: true });
-    }
-
     // Save the atlas image.
     try {
       saveAtlasImage(config.name, saveFolder, atlas);
@@ -110,6 +119,43 @@ function packAtlas(userPath?: string): void {
     process.stdout.write('No atlases were successfully packed.\n');
   } else {
     process.stdout.write(`Successfully packed ${packedCount} atlas(es).\n`);
+  }
+}
+
+function padTilesets(configList: AtlasConfigList): void {
+  if (!configList.tilesets) {
+    return;
+  }
+
+  let paddedCount = 0;
+  for (const config of configList.tilesets) {
+    // Convert numeric properties to numbers.
+    if (config.tileWidth) {
+      config.tileWidth = Number(config.tileWidth);
+    }
+    if (config.tileHeight) {
+      config.tileHeight = Number(config.tileHeight);
+    }
+
+    if (config.extrude) {
+      config.extrude = Number(config.extrude);
+    }
+
+    paddedCount++;
+
+    const tileset = new Tileset(config);
+    const saveFolder = Path.join(process.cwd(), config.saveFolder);
+    try {
+      saveTilesetImage(config.name, saveFolder, tileset);
+    } catch (error) {
+      process.stdout.write(`Error: Failed to save atlas image for "${config.name}": ${(error as Error).message}\n`);
+    }
+  }
+
+  if (paddedCount === 0) {
+    process.stdout.write('No tilesets were successfully padded.\n');
+  } else {
+    process.stdout.write(`Successfully padded ${paddedCount} tileset(s).\n`);
   }
 }
 
@@ -148,7 +194,7 @@ program
   .description('Pack images into an atlas')
   .option('-p, --project <string>')
   .action(({ project }: PackAtlasOptions) => {
-    packAtlas(project);
+    pack(project);
   });
 
 program
