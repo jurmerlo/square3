@@ -137,6 +137,11 @@ function padTilesets(configList: AtlasConfigList): void {
       config.tileHeight = Number(config.tileHeight);
     }
 
+    if (!config.tileWidth || !config.tileHeight) {
+      process.stdout.write(`Error: tileWidth and tileHeight must be specified for tileset "${config.name}".\n`);
+      continue;
+    }
+
     if (config.extrude) {
       config.extrude = Number(config.extrude);
     }
