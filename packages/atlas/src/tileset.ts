@@ -21,10 +21,6 @@ export class Tileset {
         const tileImage = new Image(config.tileWidth, config.tileHeight);
 
         PNG.bitblt(sourceImage.pngData, tileImage.pngData, tileX, tileY, config.tileWidth, config.tileHeight);
-        if (tileImage.isEmpty()) {
-          continue;
-        }
-
         tileImage.extrudeEdges(config.extrude ?? 0);
 
         row.push(tileImage);
@@ -34,13 +30,31 @@ export class Tileset {
       }
     }
 
-    const verticalTileCount = tiles.length;
     let horizontalTileCount = 0;
     for (const row of tiles) {
+      // Remove trailing empty tiles.
+      for (let x = row.length - 1; x >= 0; x--) {
+        if (row[x].isEmpty()) {
+          row.pop();
+        } else {
+          break;
+        }
+      }
+
       if (row.length > horizontalTileCount) {
         horizontalTileCount = row.length;
       }
     }
+
+    for (let y = tiles.length - 1; y >= 0; y--) {
+      // Remove trailing empty rows.
+      if (tiles[y].length === 0) {
+        tiles.pop();
+      } else {
+        break;
+      }
+    }
+    const verticalTileCount = tiles.length;
 
     let extrude = config.extrude ?? 0;
     extrude *= 2;
