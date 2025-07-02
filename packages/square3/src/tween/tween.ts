@@ -7,7 +7,7 @@ type PropertyData = {
   propertyName: string;
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny:
 type Target = { [key: string]: any };
 
 export class Tween {

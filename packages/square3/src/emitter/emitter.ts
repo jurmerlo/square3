@@ -1,14 +1,14 @@
 export type EmitHandler = {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   callback: (...args: any[]) => void;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   filter?: (...args: any[]) => boolean;
 
   active: boolean;
 };
 
 export type EmitterOnParams<
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   T extends Record<string, any[]>,
   K extends keyof T,
 > = {
@@ -21,7 +21,7 @@ export type EmitterOnParams<
  * Class representing an event emitter.
  */
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny:
 export class Emitter<T extends Record<string, any[]>> {
   private handlers: { [K in keyof T]?: EmitHandler[] } = {};
 

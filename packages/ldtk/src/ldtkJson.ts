@@ -198,7 +198,7 @@ export type LdtkProjectJson = {
    * https://github.com/deepnight/ldtk/issues/231
    */
   worlds: World[];
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   [property: string]: any;
 };
 
@@ -236,7 +236,7 @@ export type ForcedRefs = {
   TilesetRect?: TilesetRectangle;
   TocInstanceData?: LdtkTocInstanceData;
   World?: World;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   [property: string]: any;
 };
 
@@ -644,7 +644,7 @@ export type FieldDefinition = {
    * Default value if selected value is null or invalid.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   defaultOverride?: any;
   /**
    * User defined documentation for this field to provide help/tips to level designers about
@@ -1068,7 +1068,7 @@ export type TilesetDefinition = {
    * The following data is used internally for various optimizations. It's always synced with
    * source image changes.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   cachedPixelData?: { [key: string]: any } | null;
   /**
    * An array of custom tile metadata
@@ -1231,7 +1231,7 @@ export type FieldInstance = {
    * [EntityReferenceInfos](#ldtk-EntityReferenceInfos) object.<br/><br/>  If the field is an
    * array, then this `__value` will also be a JSON array.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   __value: any;
   /**
    * Reference of the **Field definition** UID
@@ -1240,7 +1240,7 @@ export type FieldInstance = {
   /**
    * Editor internal raw values
    */
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   realEditorValues: any[];
 };
 
@@ -1613,7 +1613,7 @@ export type LdtkTocInstanceData = {
    * An object containing the values of all entity fields with the `exportToToc` option
    * enabled. This object typing depends on actual field value types.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   fields: any;
   heiPx: number;
   /**

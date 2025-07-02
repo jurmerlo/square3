@@ -9,13 +9,13 @@ export function inject(name?: string) {
   return (
     _value: undefined,
     context: ClassMemberDecoratorContext,
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny:
   ): (() => any) | undefined => {
     if (context.kind === 'field') {
       // Use passed in name or else the field name.
       const serviceName = name || (context.name as string);
       // Return a getter function that returns the required service.
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny:
       return (): any => {
         return getService(serviceName);
       };

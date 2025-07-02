@@ -36,7 +36,7 @@ export abstract class AssetLoader<T> {
    * @param assets The asset manager instance.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   constructor(assetType: new (...args: any[]) => T, assets: Assets) {
     this.assetType = assetType;
     this.assets = assets;
@@ -95,7 +95,7 @@ export class Assets {
    */
   private readonly loaders = new Map<
     new (
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      // biome-ignore lint/suspicious/noExplicitAny:
       ...args: any[]
     ) => unknown,
     AssetLoader<unknown>
@@ -119,7 +119,7 @@ export class Assets {
    * @returns The loaded asset.
    */
   async load<T>(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny:
     type: new (...args: any[]) => T,
     id: string,
     path: string,
@@ -174,7 +174,7 @@ export class Assets {
    * @param instance The asset to add.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   add<T>(type: new (...args: any[]) => T, id: string, instance: T): void {
     if (this.loaders.has(type)) {
       this.loaders.get(type)?.add(id, instance);
@@ -190,7 +190,7 @@ export class Assets {
    * @returns The loaded asset. Will throw if the asset is not loaded.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   get<T>(type: new (...args: any[]) => T, id: string): T {
     if (this.loaders.has(type)) {
       return this.loaders.get(type)?.get(id) as T;
@@ -206,7 +206,7 @@ export class Assets {
    * @returns True if the unload was successful.
    */
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny:
   unload<T>(type: new (...args: any[]) => T, id: string): boolean {
     if (this.loaders.has(type)) {
       return this.loaders.get(type)?.unload(id) ?? false;
