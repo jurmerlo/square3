@@ -1,8 +1,12 @@
 import { Assets } from './assets/assets.js';
 import { registerBuiltinLoaders } from './assets/registerBuiltins.js';
+import { debugFontData } from './debug/debugFontData.js';
+import { DebugView } from './debug/debugView.js';
 import { addService } from './di/services.js';
+import { BitmapFont } from './graphics/bitmapFont.js';
 import { GLContext } from './graphics/glContext.js';
 import { Graphics } from './graphics/graphics.js';
+import { Image } from './graphics/image.js';
 import { RenderTarget } from './graphics/renderTarget.js';
 import { Input } from './input/input.js';
 import { clamp } from './math/mathUtils.js';
@@ -74,6 +78,8 @@ export type GameOptions = {
    * The scene to start the game with.
    */
   startScene: SceneType;
+
+  debugEnabled?: boolean;
 };
 
 export class Game {
@@ -100,49 +106,63 @@ export class Game {
 
   private inFocus = true;
 
-  constructor(options: GameOptions) {
-    const gameOptions = options;
-    gameOptions.title = gameOptions.title || 'Square 3 Game';
-    gameOptions.width = gameOptions.width || 800;
-    gameOptions.height = gameOptions.height || 600;
+  private debugView!: DebugView;
 
-    if (gameOptions.fillWindow) {
-      gameOptions.canvasWidth = window.innerWidth;
-      gameOptions.canvasHeight = window.innerHeight;
+  constructor({
+    title,
+    width,
+    height,
+    fillWindow,
+    canvasWidth,
+    canvasHeight,
+    canvasId,
+    targetFps,
+    runInBackground,
+    hdpi,
+    startScene,
+    debugEnabled,
+  }: GameOptions) {
+    title = title || 'Square 3 Game';
+    width = width || 800;
+    height = height || 600;
+
+    if (fillWindow) {
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
     }
 
-    gameOptions.canvasWidth = gameOptions.canvasWidth || gameOptions.width;
-    gameOptions.canvasHeight = gameOptions.canvasHeight || gameOptions.height;
-    gameOptions.canvasId = gameOptions.canvasId || 'square3Canvas';
-    gameOptions.targetFps = gameOptions.targetFps || -1;
-    gameOptions.runInBackground = gameOptions.runInBackground || false;
-    gameOptions.hdpi = gameOptions.hdpi || false;
+    canvasWidth = canvasWidth || width;
+    canvasHeight = canvasHeight || height;
+    canvasId = canvasId || 'square3Canvas';
+    targetFps = targetFps || -1;
+    runInBackground = runInBackground || false;
+    hdpi = hdpi || false;
 
-    document.title = gameOptions.title;
+    document.title = title;
 
-    this.runInBackground = gameOptions.runInBackground;
+    this.runInBackground = runInBackground;
 
-    const pixelRatio = gameOptions.hdpi ? window.devicePixelRatio : 1;
+    const pixelRatio = hdpi ? window.devicePixelRatio : 1;
 
-    const canvas = document.getElementById(gameOptions.canvasId) as HTMLCanvasElement;
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
 
     if (!canvas) {
-      throw new Error(`Canvas with id '${gameOptions.canvasId}' not found.`);
+      throw new Error(`Canvas with id '${canvasId}' not found.`);
     }
 
-    canvas.style.width = `${gameOptions.canvasWidth}px`;
-    canvas.style.height = `${gameOptions.canvasHeight}px`;
+    canvas.style.width = `${canvasWidth}px`;
+    canvas.style.height = `${canvasHeight}px`;
 
     this.context = new GLContext(canvas);
     addService('glContext', this.context);
 
     this.view = new View({
-      designWidth: gameOptions.width,
-      designHeight: gameOptions.height,
+      designWidth: width,
+      designHeight: height,
       pixelRatio,
       canvas,
-      targetFps: gameOptions.targetFps,
-      fillWindow: gameOptions.fillWindow ?? false,
+      targetFps: targetFps,
+      fillWindow: fillWindow ?? false,
     });
     addService('view', this.view);
 
@@ -167,16 +187,27 @@ export class Game {
     registerBuiltinLoaders(assets);
     addService('assets', assets);
 
-    canvas.focus();
-    canvas.addEventListener('blur', () => this.toBackground());
-    canvas.addEventListener('focus', () => this.toForeground());
-    window.addEventListener('resize', () => this.resize(window.innerWidth, window.innerHeight));
+    assets
+      .load(Image, 's3DebugFontImage', debugFontData.imageData)
+      .then((image) => {
+        const debugFont = new BitmapFont(image, debugFontData.fontData);
+        assets.add(BitmapFont, 's3DebugFont', debugFont);
+      })
+      .finally(() => {
+        this.debugView = new DebugView(debugEnabled);
+        addService('debugView', this.debugView);
 
-    requestAnimationFrame((_time) => {
-      this.lastFrameTime = Date.now();
-      this.scenes.switch(options.startScene);
-      this.loop();
-    });
+        canvas.focus();
+        canvas.addEventListener('blur', () => this.toBackground());
+        canvas.addEventListener('focus', () => this.toForeground());
+        window.addEventListener('resize', () => this.resize(window.innerWidth, window.innerHeight));
+
+        requestAnimationFrame((_time) => {
+          this.lastFrameTime = Date.now();
+          this.scenes.switch(startScene);
+          this.loop();
+        });
+      });
   }
 
   toBackground(): void {
@@ -240,6 +271,9 @@ export class Game {
     this.graphics.pushTarget(this.target);
 
     this.scenes.draw(this.graphics);
+    this.graphics.color.set(1, 1, 1, 1);
+    this.graphics.transform.identity();
+    this.debugView.draw(this.graphics);
 
     this.graphics.popTarget();
 

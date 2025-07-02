@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  build: {
-    minify: false,
-  },
+  build: {},
   esbuild: {
     target: 'es2022',
   },

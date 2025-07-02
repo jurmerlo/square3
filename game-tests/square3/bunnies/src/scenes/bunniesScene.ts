@@ -36,12 +36,10 @@ export class BunniesScene extends Scene {
 
   override async load(): Promise<void> {
     await this.assets.load(Atlas, 'bunnySprites', 'assets/bunnyAtlas');
-    await this.assets.load(BitmapFont, 'bunnyFont', 'assets/kp-32');
   }
 
   override init(): void {
-    const font = this.assets.get(BitmapFont, 'bunnyFont');
-
+    const font = this.assets.get(BitmapFont, 's3DebugFont');
     this.bunniesText = new EText({ x: 20, y: 20, font, text: 'Bunnies: 0', anchor: { x: 0, y: 0 } });
     this.addEntity(this.bunniesText);
 

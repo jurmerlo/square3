@@ -13,6 +13,9 @@ export * from './components/cText.js';
 export * from './components/cTilemap.js';
 export * from './components/cTransform.js';
 
+export * from './debug/debugView.js';
+export * from './debug/debugWatch.js';
+
 export * from './di/inject.js';
 export * from './di/services.js';
 
